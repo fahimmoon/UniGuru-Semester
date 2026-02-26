@@ -1,0 +1,46 @@
+name: uniguru_semester
+description: Master Your Entire Semester – One Beautiful App for Pakistani Students.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.24.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  flutter_riverpod: ^2.4.9
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.1
+  flutter_tts: ^3.8.5
+  rive: ^0.12.3
+  lottie: ^3.0.0
+  model_viewer_plus: ^1.7.0
+  google_fonts: ^6.1.0
+  lucide_icons: ^0.321.0
+  framer_motion: ^0.0.1 # Simulated for Flutter
+  canvas_confetti: ^2.0.0
+  share_plus: ^7.2.1
+  path: ^1.8.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.7
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/animations/
+    - assets/models/
+  fonts:
+    - family: NotoNastaliqUrdu
+      fonts:
+        - asset: assets/fonts/NotoNastaliqUrdu-Regular.ttf

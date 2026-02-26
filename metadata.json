@@ -1,0 +1,7 @@
+{
+  "name": "UniGuru Semester",
+  "description": "Master Your Entire Semester – One Beautiful App. The ultimate learning companion for Pakistani university students.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
