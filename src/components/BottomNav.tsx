@@ -16,9 +16,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, labelUr, active, onClick
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center gap-1.5 p-2 flex-1 transition-all relative ${
-        active ? 'text-pak-green' : 'text-gray-400 hover:text-pak-green/70'
-      }`}
+      className={`flex flex-col items-center gap-1.5 p-2 flex-1 transition-all relative ${active ? 'text-pak-green' : 'text-gray-400 hover:text-pak-green/70'
+        }`}
     >
       <AnimatePresence>
         {active && (
@@ -31,7 +30,7 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, labelUr, active, onClick
           />
         )}
       </AnimatePresence>
-      <motion.div 
+      <motion.div
         animate={active ? { scale: 1.1, y: -2 } : { scale: 1, y: 0 }}
         className={`transition-all ${active ? 'drop-shadow-[0_4px_8px_rgba(0,100,0,0.2)]' : ''}`}
       >
@@ -46,41 +45,41 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, labelUr, active, onClick
 
 export const BottomNav: React.FC<{ activeTab: string; onTabChange: (tab: string) => void }> = ({ activeTab, onTabChange }) => {
   return (
-    <nav className="bg-white/80 backdrop-blur-xl border-t border-gray-100 flex justify-around items-center px-4 py-3 pb-safe fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] rounded-t-[40px]">
-      <NavItem 
-        icon={<Home size={24} />} 
-        label="Home" 
-        labelUr="ہوم" 
-        active={activeTab === 'home'} 
-        onClick={() => onTabChange('home')} 
+    <nav className="absolute z-50 bottom-0 w-full bg-white/70 backdrop-blur-2xl border-t border-white/40 flex justify-around items-center px-2 py-3 pb-[env(safe-area-inset-bottom,12px)] shadow-[0_-20px_40px_rgba(0,0,0,0.04)] sm:rounded-b-[40px] rounded-t-3xl">
+      <NavItem
+        icon={<Home size={24} />}
+        label="Home"
+        labelUr="ہوم"
+        active={activeTab === 'home'}
+        onClick={() => onTabChange('home')}
       />
-      <NavItem 
-        icon={<BookOpen size={24} />} 
-        label="Learn" 
-        labelUr="سیکھیں" 
-        active={activeTab === 'learn'} 
-        onClick={() => onTabChange('learn')} 
+      <NavItem
+        icon={<BookOpen size={24} />}
+        label="Learn"
+        labelUr="سیکھیں"
+        active={activeTab === 'learn'}
+        onClick={() => onTabChange('learn')}
       />
-      <NavItem 
-        icon={<Calculator size={24} />} 
-        label="Tools" 
-        labelUr="ٹولز" 
-        active={activeTab === 'tools'} 
-        onClick={() => onTabChange('tools')} 
+      <NavItem
+        icon={<Calculator size={24} />}
+        label="Tools"
+        labelUr="ٹولز"
+        active={activeTab === 'tools'}
+        onClick={() => onTabChange('tools')}
       />
-      <NavItem 
-        icon={<Award size={24} />} 
-        label="Cert" 
-        labelUr="سرٹیفکیٹ" 
-        active={activeTab === 'cert'} 
-        onClick={() => onTabChange('cert')} 
+      <NavItem
+        icon={<Award size={24} />}
+        label="Cert"
+        labelUr="سرٹیفکیٹ"
+        active={activeTab === 'cert'}
+        onClick={() => onTabChange('cert')}
       />
-      <NavItem 
-        icon={<User size={24} />} 
-        label="Profile" 
-        labelUr="پروفائل" 
-        active={activeTab === 'profile'} 
-        onClick={() => onTabChange('profile')} 
+      <NavItem
+        icon={<User size={24} />}
+        label="Profile"
+        labelUr="پروفائل"
+        active={activeTab === 'profile'}
+        onClick={() => onTabChange('profile')}
       />
     </nav>
   );

@@ -26,7 +26,7 @@ const AppContent: React.FC = () => {
       return (
         <div className="space-y-4 pb-24">
           <div className="p-4 flex items-center gap-4 sticky top-0 bg-gray-50 border-b border-gray-200 z-40">
-            <button 
+            <button
               onClick={() => setSelectedCourse(null)}
               className="p-2 bg-white rounded-full shadow-sm text-pak-green"
             >
@@ -34,9 +34,9 @@ const AppContent: React.FC = () => {
             </button>
             <h2 className="text-xl font-black text-gray-900">{t('Computer Networks', 'کمپیوٹر نیٹ ورکس')}</h2>
           </div>
-          
+
           <CNDCContent />
-          
+
           <div className="px-4 space-y-8">
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-6 bg-pak-green rounded-full" />
@@ -56,7 +56,7 @@ const AppContent: React.FC = () => {
     }
     return (
       <div className="p-8 text-center space-y-4">
-        <button 
+        <button
           onClick={() => setSelectedCourse(null)}
           className="p-2 bg-white rounded-full shadow-sm text-pak-green inline-flex"
         >
@@ -97,7 +97,7 @@ const AppContent: React.FC = () => {
         return (
           <div className="p-8 flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
             <div className="relative">
-              <motion.div 
+              <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 bg-pak-green/10 rounded-full scale-150 blur-xl"
@@ -132,24 +132,26 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 max-w-md mx-auto shadow-2xl relative">
-      <Header onMenuClick={() => {}} />
-      
-      <main className="flex-1 overflow-y-auto pak-pattern">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderContent()}
-          </motion.div>
-        </AnimatePresence>
-      </main>
+    <div className="flex justify-center items-center min-h-[100dvh] w-full bg-[#f0f2f5] overflow-hidden sm:p-4 md:p-8">
+      <div className="flex flex-col bg-gray-50 h-[100dvh] sm:h-full sm:max-h-[850px] w-full max-w-[430px] sm:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] relative overflow-hidden ring-1 ring-gray-900/5 transition-all">
+        <Header onMenuClick={() => { }} />
 
-      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+        <main className="flex-1 overflow-y-auto overflow-x-hidden pak-pattern pb-[88px] relative z-0 hide-scrollbar">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, scale: 0.98, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: -10 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+      </div>
     </div>
   );
 };
