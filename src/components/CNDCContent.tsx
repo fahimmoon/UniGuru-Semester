@@ -714,6 +714,125 @@ const NetworkDevicesSection = () => {
   );
 };
 
+const WirelessSection = () => {
+  const { t } = useLanguage();
+  return (
+    <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl mt-8 md:mt-16">
+      <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
+        <Radio size={28} className="md:w-8 md:h-8" /> {t('Wireless Networking (WLAN)', 'وائرلیس نیٹ ورکنگ (WLAN)')}
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="space-y-6">
+          <div className="bg-blue-50 p-6 rounded-3xl border border-blue-100">
+            <h4 className="font-black text-blue-900 mb-2">2.4 GHz Band</h4>
+            <ul className="text-xs text-blue-800 space-y-2">
+              <li className="flex gap-2"><span>📡</span> {t('Longer range, better at penetrating walls.', 'طویل فاصلہ، دیواروں کے پار بہتر سگنل۔')}</li>
+              <li className="flex gap-2"><span>🐢</span> {t('Slower speeds, high interference (used by microwaves/Bluetooth).', 'سست رفتار، زیادہ مداخلت (مائیکرو ویو اور بلوٹوتھ بھی اسے استعمال کرتے ہیں)۔')}</li>
+            </ul>
+          </div>
+          <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
+            <h4 className="font-black text-emerald-900 mb-2">5 GHz Band</h4>
+            <ul className="text-xs text-emerald-800 space-y-2">
+              <li className="flex gap-2"><span>⚡</span> {t('Much faster speeds, less congestion.', 'بہت تیز رفتار، کم رش۔')}</li>
+              <li className="flex gap-2"><span>🏚️</span> {t('Shorter range, easily blocked by physical obstacles.', 'کم فاصلہ، رکاوٹوں سے سگنل جلدی متاثر ہوتا ہے۔')}</li>
+            </ul>
+          </div>
+        </div>
+        <div className="bg-gray-50 p-8 rounded-[40px] shadow-inner relative h-64 flex items-center justify-center">
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Range Circles */}
+            <motion.circle initial={{ r: 0 }} animate={{ r: 120 }} transition={{ duration: 4, repeat: Infinity }} cx="50%" cy="50%" fill="none" stroke="#3B82F6" strokeWidth="2" opacity="0.2" />
+            <motion.circle initial={{ r: 0 }} animate={{ r: 80 }} transition={{ duration: 3, repeat: Infinity }} cx="50%" cy="50%" fill="none" stroke="#10B981" strokeWidth="2" opacity="0.4" />
+            <div className="bg-white p-4 rounded-3xl shadow-xl z-10 border-4 border-[#006400]">
+              <Radio size={48} className="text-[#006400]" />
+            </div>
+            <div className="absolute top-4 left-4 text-[10px] font-black text-blue-500 uppercase tracking-widest">{t('2.4GHz Range', '2.4GHz رینج')}</div>
+            <div className="absolute top-16 left-16 text-[10px] font-black text-emerald-500 uppercase tracking-widest">{t('5GHz Range', '5GHz رینج')}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SecuritySection = () => {
+  const { t } = useLanguage();
+  return (
+    <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl mt-8 md:mt-16 overflow-hidden">
+      <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
+        <Shield size={28} className="md:w-8 md:h-8" /> {t('Network Security: Defense in Depth', 'نیٹ ورک سیکیورٹی')}
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="p-6 bg-slate-900 text-white rounded-[32px] space-y-4">
+          <div className="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center">
+            <Zap size={24} />
+          </div>
+          <h4 className="font-black text-xl">Firewall</h4>
+          <p className="text-[10px] opacity-70 leading-relaxed font-medium">
+            {t('Acts as a barrier between internal and external networks. It filters traffic based on predefined security rules (IPs, Ports, Protocols).', 'اندرونی اور بیرونی نیٹ ورکس کے درمیان ایک رکاوٹ کے طور پر کام کرتا ہے۔')}
+          </p>
+        </div>
+        <div className="p-6 bg-[#006400] text-white rounded-[32px] space-y-4">
+          <div className="w-12 h-12 bg-yellow-400 text-black rounded-2xl flex items-center justify-center">
+            <Search size={24} />
+          </div>
+          <h4 className="font-black text-xl">IDS</h4>
+          <p className="text-[10px] opacity-70 leading-relaxed font-medium">
+            {t('Intrusion Detection System. It MONITORS and reports suspicious activity, like a burglar alarm.', 'درازی کی شناخت کا نظام۔ یہ مشکوک سرگرمیوں کی نگرانی اور رپورٹنگ کرتا ہے۔')}
+          </p>
+        </div>
+        <div className="p-6 bg-[#00A651] text-white rounded-[32px] space-y-4">
+          <div className="w-12 h-12 bg-blue-400 rounded-2xl flex items-center justify-center">
+            <Shield size={24} />
+          </div>
+          <h4 className="font-black text-xl">IPS</h4>
+          <p className="text-[10px] opacity-70 leading-relaxed font-medium">
+            {t('Intrusion Prevention System. It not only detects but also BLOCKS threats immediately, like a security guard.', 'درازی کی روک تھام کا نظام۔ یہ نہ صرف شناخت کرتا ہے بلکہ خطرات کو فوری طور پر روکتا بھی ہے۔')}
+          </p>
+        </div>
+      </div>
+      <div className="mt-8 p-6 bg-gray-50 rounded-3xl border border-dashed border-gray-200 text-center">
+        <p className="text-xs text-gray-400 font-bold uppercase tracking-[0.2em] mb-4">{t('Visualizing the Sandbox', 'تصوراتی خاکہ')}</p>
+        <div className="flex justify-center items-center gap-8 md:gap-16 opacity-40">
+          <Globe size={48} />
+          <ArrowRight size={32} />
+          <div className="w-2 h-24 bg-red-600 rounded-full" />
+          <ArrowRight size={32} />
+          <Server size={48} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CloudSection = () => {
+  const { t } = useLanguage();
+  return (
+    <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl mt-8 md:mt-16">
+      <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
+        <Cloud size={28} className="md:w-8 md:h-8" /> {t('Cloud Models (As-A-Service)', 'کلاؤڈ ماڈلز')}
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 mb-8 rounded-3xl overflow-hidden border-2 border-gray-100">
+        <div className="p-8 bg-blue-600 text-white">
+          <h4 className="font-black text-2xl mb-2">IaaS</h4>
+          <span className="text-[10px] bg-white/20 px-2 py-1 rounded font-bold uppercase">Infrastructure</span>
+          <p className="text-[10px] mt-4 opacity-80 leading-relaxed">{t('Renting raw hardware (VMs, Storage). You manage everything else.', 'خام ہارڈویئر کرائے پر لینا۔ آپ باقی سب کچھ خود سنبھالتے ہیں۔')}</p>
+        </div>
+        <div className="p-8 bg-purple-600 text-white">
+          <h4 className="font-black text-2xl mb-2">PaaS</h4>
+          <span className="text-[10px] bg-white/20 px-2 py-1 rounded font-bold uppercase">Platform</span>
+          <p className="text-[10px] mt-4 opacity-80 leading-relaxed">{t('Providers give you tools/OS to build apps. No hardware worries.', 'ایپس بنانے کے لیے ٹولز اور OS فراہم کیے جاتے ہیں۔')}</p>
+        </div>
+        <div className="p-8 bg-emerald-600 text-white">
+          <h4 className="font-black text-2xl mb-2">SaaS</h4>
+          <span className="text-[10px] bg-white/20 px-2 py-1 rounded font-bold uppercase">Software</span>
+          <p className="text-[10px] mt-4 opacity-80 leading-relaxed">{t('Finished products over the internet (Gmail, Netflix, Zoom).', 'انٹرنیٹ پر تیار مصنوعات۔')}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const CNDCContent: React.FC = () => {
   const { t } = useLanguage();
 
@@ -1200,9 +1319,12 @@ export const CNDCContent: React.FC = () => {
 
         <DNSSection />
 
-        {/* NEW ENHANCED CONTENT */}
+        {/* NEW ENHANCED CONTENT - CHAPTER 3 & 4 */}
         <NetworkDevicesSection />
         <TCPvsUDPSection />
+        <WirelessSection />
+        <SecuritySection />
+        <CloudSection />
       </section>
 
     </div>
