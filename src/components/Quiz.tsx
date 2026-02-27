@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, CheckCircle2, XCircle, ChevronRight, Award } from 'lucide-react';
@@ -27,11 +27,30 @@ const QUESTIONS = [
 
 export const Quiz: React.FC = () => {
   const { t } = useLanguage();
-  const [currentIdx, setCurrentIdx] = useState(0);
+
+  const [currentIdx, setCurrentIdx] = useState(() => {
+    const saved = localStorage.getItem('quiz_idx');
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
   const [selected, setSelected] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
-  const [score, setScore] = useState(0);
-  const [finished, setFinished] = useState(false);
+
+  const [score, setScore] = useState(() => {
+    const saved = localStorage.getItem('quiz_score');
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
+  const [finished, setFinished] = useState(() => {
+    const saved = localStorage.getItem('quiz_finished');
+    return saved === 'true';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('quiz_idx', currentIdx.toString());
+    localStorage.setItem('quiz_score', score.toString());
+    localStorage.setItem('quiz_finished', finished.toString());
+  }, [currentIdx, score, finished]);
 
   const handleSelect = (idx: number) => {
     if (selected !== null) return;
@@ -107,15 +126,14 @@ export const Quiz: React.FC = () => {
               <button
                 key={idx}
                 onClick={() => handleSelect(idx)}
-                className={`w-full p-4 rounded-xl text-left transition-all border-2 flex items-center justify-between ${
-                  selected === idx
+                className={`w-full p-4 rounded-xl text-left transition-all border-2 flex items-center justify-between ${selected === idx
                     ? idx === q.correct
                       ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
                       : 'bg-rose-50 border-rose-500 text-rose-700'
                     : selected !== null && idx === q.correct
-                    ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
-                    : 'bg-gray-50 border-gray-100 text-gray-600 hover:border-pak-green/30'
-                }`}
+                      ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
+                      : 'bg-gray-50 border-gray-100 text-gray-600 hover:border-pak-green/30'
+                  }`}
               >
                 <span className="font-medium">{t(opt, q.optionsUr[idx])}</span>
                 {selected !== null && idx === q.correct && <CheckCircle2 size={18} />}

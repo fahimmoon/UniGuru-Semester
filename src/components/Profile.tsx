@@ -18,7 +18,7 @@ export const Profile: React.FC = () => {
       {/* Profile Header */}
       <div className="bg-white rounded-[40px] p-8 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col items-center text-center space-y-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-pak-green to-pak-light-green opacity-10" />
-        
+
         <div className="relative">
           <div className="w-28 h-28 rounded-[32px] bg-pak-green p-1 shadow-2xl shadow-pak-green/30">
             <div className="w-full h-full rounded-[28px] bg-white flex items-center justify-center text-pak-green">
@@ -31,7 +31,7 @@ export const Profile: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="text-2xl font-black text-gray-900">Fahim Khan</h2>
+          <h2 className="text-2xl font-black text-gray-900">Fahim Ahmad</h2>
           <p className="text-xs font-bold text-pak-green uppercase tracking-widest">BS Computer Science • Semester 5</p>
         </div>
 
@@ -74,9 +74,8 @@ export const Profile: React.FC = () => {
         {menuItems.map((item, i) => (
           <button
             key={item.label}
-            className={`w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors ${
-              i !== menuItems.length - 1 ? 'border-bottom border-gray-50' : ''
-            }`}
+            className={`w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors ${i !== menuItems.length - 1 ? 'border-bottom border-gray-50' : ''
+              }`}
           >
             <div className="flex items-center gap-4">
               <div className="p-2.5 bg-gray-100 rounded-xl text-gray-500">
