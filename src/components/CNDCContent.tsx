@@ -774,21 +774,38 @@ export const CNDCContent: React.FC = () => {
         <div className="bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
           <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 text-[#006400]">1-1 Data Communications</h3>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-6">
-            {["Message", "Sender", "Receiver", "Transmission Medium", "Protocol"].map((item, i) => (
-              <motion.div key={i} whileHover={{ y: -8 }} className="bg-[#006400] text-white p-4 md:p-8 rounded-[24px] md:rounded-[32px] text-center shadow-xl">
-                <div className="text-3xl md:text-6xl mb-2 md:mb-4 opacity-50 font-black">0{i + 1}</div>
-                <h4 className="font-black text-[10px] md:text-xl leading-tight">{t(item, item)}</h4>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-6 mb-8">
+            {[
+              { label: "Message", desc: "The data or information to be communicated (text, video, audio)." },
+              { label: "Sender", desc: "The device that sends the data message (computer, phone, camera)." },
+              { label: "Receiver", desc: "The device that receives the message (server, workstation, TV)." },
+              { label: "Transmission Medium", desc: "The physical path by which a message travels (cable, fiber, air)." },
+              { label: "Protocol", desc: "A set of rules that governs data communications, ensuring both sides understand each other." }
+            ].map((item, i) => (
+              <motion.div key={i} whileHover={{ y: -8 }} className="bg-[#006400] text-white p-4 md:p-6 rounded-[24px] md:rounded-[32px] text-center shadow-xl flex flex-col items-center justify-center group relative overflow-hidden">
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="text-3xl md:text-6xl mb-2 opacity-50 font-black relative z-10">0{i + 1}</div>
+                <h4 className="font-black text-[12px] md:text-sm leading-tight relative z-10 mb-2">{t(item.label, item.label)}</h4>
+                <p className="text-[8px] md:text-[10px] text-green-100/80 leading-snug hidden md:block">{t(item.desc, item.desc)}</p>
               </motion.div>
             ))}
           </div>
 
           <div className="mt-8 md:mt-12 bg-gray-50 p-6 md:p-10 rounded-[24px] md:rounded-[32px]">
-            <h4 className="font-black mb-4 md:mb-6 text-center text-sm md:text-base">Data Flow (Figure 1.2)</h4>
-            <div className="flex flex-wrap gap-4 md:gap-8 justify-center text-center">
-              <div className="px-4 py-2 md:p-6 bg-white rounded-2xl md:rounded-3xl shadow-sm text-xs md:text-base font-bold">Simplex</div>
-              <div className="px-4 py-2 md:p-6 bg-white rounded-2xl md:rounded-3xl shadow-sm text-xs md:text-base font-bold">Half-Duplex</div>
-              <div className="px-4 py-2 md:p-6 bg-white rounded-2xl md:rounded-3xl shadow-sm text-xs md:text-base font-bold">Full-Duplex</div>
+            <h4 className="font-black mb-4 md:mb-6 text-center text-lg md:text-xl text-[#006400]">Data Flow (Simplex vs Duplex)</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <h5 className="font-black text-blue-800 text-lg mb-2">Simplex</h5>
+                <p className="text-xs text-gray-600 leading-relaxed">{t('Communication is strictly one-way, like a one-way street. Only one device on a link can transmit; the other can only receive (e.g., Keyboard to Monitor, Television Broadcasting).', 'رابطہ صرف ایک طرفہ ہوتا ہے۔ ایک آلہ صرف بھیج سکتا ہے اور دوسرا صرف وصول کر سکتا ہے۔')}</p>
+              </div>
+              <div className="p-6 bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <h5 className="font-black text-orange-800 text-lg mb-2">Half-Duplex</h5>
+                <p className="text-xs text-gray-600 leading-relaxed">{t('Each station can both transmit and receive, but NOT at the same time. While one transmits, the other must wait (e.g., Walkie-Talkies).', 'دونوں آلات بھیج اور وصول سکتے ہیں، لیکن ایک وقت میں نہیں۔ جیسے واکی ٹاکی۔')}</p>
+              </div>
+              <div className="p-6 bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <h5 className="font-black text-emerald-800 text-lg mb-2">Full-Duplex</h5>
+                <p className="text-xs text-gray-600 leading-relaxed">{t('Both stations can transmit and receive simultaneously. The link capacity is shared between the two signals going in opposite directions (e.g., Telephone Networks, Fast Ethernet).', 'دونوں آلات ایک ہی وقت میں بھیج اور وصول سکتے ہیں۔ جیسے ٹیلی فون نیٹ ورک۔')}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -866,33 +883,55 @@ export const CNDCContent: React.FC = () => {
           </div>
         </div>
 
-        {/* LAN vs WAN Pakistan Example */}
+        {/* Networks Types: LAN, MAN, WAN, PAN */}
         <div className="bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-8 text-[#006400]">LAN vs WAN – Pakistan Example</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-            <div className="space-y-4 md:space-y-6">
-              <div className="p-6 md:p-8 bg-emerald-50 rounded-[24px] md:rounded-[32px]">
-                <h4 className="font-black text-emerald-900 text-sm md:text-base">LAN – Karachi Office</h4>
-                <p className="text-xs md:text-sm mt-2 md:mt-4 opacity-70">High speed, low delay, one building</p>
+          <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-8 text-[#006400]">{t('Network Types (Coverage Area)', 'نیٹ ورک کی اقسام (کوریج ایریا)')}</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="p-6 bg-purple-50 rounded-3xl border border-purple-100 hover:-translate-y-2 transition-transform shadow-sm">
+              <h4 className="font-black text-xl text-purple-900 mb-2">PAN <span className="text-[10px] bg-purple-200 text-purple-800 px-2 py-1 rounded-full ml-2">Personal</span></h4>
+              <p className="text-xs text-purple-800 leading-relaxed font-medium">{t('Covers a very small area (1-10 meters). Used for connecting personal devices like smartphones to wireless headphones via Bluetooth.', 'بہت چھوٹے حصے کا احاطہ کرتا ہے جیسے بلوٹوتھ کی مدد سے موبائل فون اور ہیڈفونز کا رابطہ۔')}</p>
+            </div>
+            <div className="p-6 bg-emerald-50 rounded-3xl border border-emerald-100 hover:-translate-y-2 transition-transform shadow-sm">
+              <h4 className="font-black text-xl text-emerald-900 mb-2">LAN <span className="text-[10px] bg-emerald-200 text-emerald-800 px-2 py-1 rounded-full ml-2">Local</span></h4>
+              <p className="text-xs text-emerald-800 leading-relaxed font-medium">{t('Privately owned network linking devices in a single office, building, or campus. Can range from two PCs to thousands. Uses Ethernet/Wi-Fi.', 'ایک دفتر، عمارت، یا کیمپس میں ڈیوائسز کو جوڑنے والا پرائیویٹ نیٹ ورک۔')}</p>
+            </div>
+            <div className="p-6 bg-blue-50 rounded-3xl border border-blue-100 hover:-translate-y-2 transition-transform shadow-sm">
+              <h4 className="font-black text-xl text-blue-900 mb-2">MAN <span className="text-[10px] bg-blue-200 text-blue-800 px-2 py-1 rounded-full ml-2">Metropolitan</span></h4>
+              <p className="text-xs text-blue-800 leading-relaxed font-medium">{t('A network with a size between a LAN and a WAN, typically covering an entire city. Example: Cable TV networks.', 'ایسا نیٹ ورک جو LAN سے بڑا اور WAN سے چھوٹا ہو، جو عام طور پر ایک پورے شہر کا احاطہ کرتا ہے۔')}</p>
+            </div>
+            <div className="p-6 bg-orange-50 rounded-3xl border border-orange-100 hover:-translate-y-2 transition-transform shadow-sm">
+              <h4 className="font-black text-xl text-orange-900 mb-2">WAN <span className="text-[10px] bg-orange-200 text-orange-800 px-2 py-1 rounded-full ml-2">Wide</span></h4>
+              <p className="text-xs text-orange-800 leading-relaxed font-medium">{t('Spans a large geographical area, often a country or continent (or the globally connected Internet). Typically uses public transmission systems.', 'ایک بڑے جغرافیائی علاقے، ملک یا براعظم پر محیط نیٹ ورک۔')}</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <div className="lg:col-span-2 space-y-4">
+              <div className="bg-emerald-50 p-6 rounded-3xl">
+                <h4 className="font-black text-emerald-900">LAN Example (Karachi Office)</h4>
+                <p className="text-xs text-emerald-800 mt-2 opacity-80">High speed gigabit links, extremely low packet delay, owned entirely by the company within a single physical building.</p>
               </div>
-              <div className="p-6 md:p-8 bg-orange-50 rounded-[24px] md:rounded-[32px]">
-                <h4 className="font-black text-orange-900 text-sm md:text-base">WAN – Karachi to Gilgit</h4>
-                <p className="text-xs md:text-sm mt-2 md:mt-4 opacity-70">1500 km distance, uses PTCL/MPLS/VPN</p>
+              <div className="bg-orange-50 p-6 rounded-3xl">
+                <h4 className="font-black text-orange-900">WAN Example (Karachi to Gilgit)</h4>
+                <p className="text-xs text-orange-800 mt-2 opacity-80">~1500 km distance. High cost, lower bandwidth compared to LAN. Leased through third-party ISPs like PTCL using MPLS or VPN tunnels.</p>
               </div>
             </div>
-            <div className="bg-gray-50 p-6 md:p-8 rounded-[24px] md:rounded-[32px] flex items-center justify-center">
-              <svg viewBox="0 0 300 140" className="w-full h-32 md:h-48">
-                <rect x="20" y="50" width="60" height="40" rx="8" fill="#006400" />
-                <text x="50" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">LAN</text>
-                <text x="50" y="115" textAnchor="middle" fill="gray" fontSize="10">Karachi</text>
+            <div className="lg:col-span-3 bg-gray-50 p-6 md:p-8 rounded-[32px] flex items-center justify-center shadow-inner">
+              <svg viewBox="0 0 400 150" className="w-full h-32 md:h-48 drop-shadow-lg">
+                <rect x="30" y="55" width="80" height="50" rx="10" fill="#10B981" />
+                <text x="70" y="80" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">LAN</text>
+                <text x="70" y="125" textAnchor="middle" fill="gray" fontSize="12" fontWeight="bold">Karachi HQ</text>
 
-                <path d="M 80 70 Q 150 30 220 70" fill="none" stroke="#00A651" strokeWidth="4" strokeDasharray="6 4" />
+                <path d="M 110 80 Q 200 10 290 80" fill="none" stroke="#F97316" strokeWidth="5" strokeDasharray="8 6" />
+                <path d="M 110 80 Q 200 150 290 80" fill="none" stroke="#F97316" strokeWidth="5" strokeDasharray="8 6" opacity="0.4" />
 
-                <rect x="220" y="50" width="60" height="40" rx="8" fill="#006400" />
-                <text x="250" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">LAN</text>
-                <text x="250" y="115" textAnchor="middle" fill="gray" fontSize="10">Gilgit</text>
+                <circle cx="200" cy="45" r="25" fill="#FFFED4" stroke="#F97316" strokeWidth="3" />
+                <text x="200" y="50" textAnchor="middle" fill="#C2410C" fontSize="12" fontWeight="bold">ISP</text>
 
-                <text x="150" y="85" textAnchor="middle" fill="#006400" fontSize="14" fontWeight="bold">WAN</text>
+                <rect x="290" y="55" width="80" height="50" rx="10" fill="#10B981" />
+                <text x="330" y="80" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">LAN</text>
+                <text x="330" y="125" textAnchor="middle" fill="gray" fontSize="12" fontWeight="bold">Gilgit Branch</text>
               </svg>
             </div>
           </div>
@@ -1063,11 +1102,54 @@ export const CNDCContent: React.FC = () => {
         </div>
 
         <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-8 text-[#006400]">Subnetting Example (ISP 190.100.0.0/16)</h3>
-          <div className="space-y-4 md:space-y-6">
-            <div className="p-6 md:p-8 bg-emerald-50 rounded-[24px] md:rounded-[32px] text-xs md:text-base font-bold">Group 1 (64 customers × 256 addresses) → /24</div>
-            <div className="p-6 md:p-8 bg-emerald-50 rounded-[24px] md:rounded-[32px] text-xs md:text-base font-bold">Group 2 (128 customers × 128 addresses) → /25</div>
-            <div className="p-6 md:p-8 bg-emerald-50 rounded-[24px] md:rounded-[32px] text-xs md:text-base font-bold">Group 3 (128 customers × 64 addresses) → /26</div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+              <h3 className="text-xl md:text-3xl font-black text-[#006400] flex items-center gap-3">
+                <Layers size={28} /> {t('Subnetting & CIDR Explained', 'سب نیٹ اور CIDR کی وضاحت')}
+              </h3>
+              <p className="text-sm text-gray-500 mt-2 font-medium">{t('Dividing a large network into smaller, efficient, and secure sub-networks.', 'ایک بڑے نیٹ ورک کو چھوٹے، موثر، اور محفوظ حصوں میں تقسیم کرنا۔')}</p>
+            </div>
+            <div className="bg-emerald-100 text-emerald-800 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Classless Inter-Domain Routing</div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100 shadow-sm">
+              <h4 className="font-black text-[#006400] text-lg mb-2">1. The Problem</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">A Class B network gives 65,534 hosts. If a company only has 500 computers, placing all 65,000 IPs in one broadcast domain wastes addresses and causes massive congestion.</p>
+            </div>
+            <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm shadow-emerald-100/50">
+              <h4 className="font-black text-emerald-800 text-lg mb-2">2. The Solution</h4>
+              <p className="text-xs text-emerald-700 leading-relaxed">Borrow bits from the Host portion to create a smaller "Subnet" portion. This splits the massive network into multiple bite-sized, isolated networks.</p>
+            </div>
+            <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100 shadow-sm">
+              <h4 className="font-black text-[#006400] text-lg mb-2">3. The Result</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">Reduced broadcast traffic, improved security (can place firewalls between subnets), and no wasted IP space.</p>
+            </div>
+          </div>
+
+          <h4 className="font-black text-gray-800 text-lg mb-4">Practical ISP Subnetting Allocation (Base: 190.100.0.0/16)</h4>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-[24px] hover:border-[#006400] transition-colors">
+              <div className="w-12 h-12 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center font-black text-xl shrink-0">1</div>
+              <div>
+                <h5 className="font-black text-sm md:text-base text-gray-800">Group 1: Needs 64 addresses per customer</h5>
+                <p className="text-xs text-gray-500 mt-1">If 256 addresses are required total per subnet, we use a <code className="bg-gray-100 px-1 rounded text-[#00A651] font-bold">/24</code> mask (leaves 8 host bits = 2^8 = 256).</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-[24px] hover:border-[#006400] transition-colors">
+              <div className="w-12 h-12 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center font-black text-xl shrink-0">2</div>
+              <div>
+                <h5 className="font-black text-sm md:text-base text-gray-800">Group 2: Needs 128 smaller subnets</h5>
+                <p className="text-xs text-gray-500 mt-1">If exactly 128 addresses are required per subnet, we borrow 1 more bit! Mask becomes <code className="bg-gray-100 px-1 rounded text-[#00A651] font-bold">/25</code> (leaves 7 host bits = 2^7 = 128).</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-[24px] hover:border-[#006400] transition-colors">
+              <div className="w-12 h-12 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center font-black text-xl shrink-0">3</div>
+              <div>
+                <h5 className="font-black text-sm md:text-base text-gray-800">Group 3: Needs micro networks</h5>
+                <p className="text-xs text-gray-500 mt-1">Require 64 addresses? Borrow 2 bits! Mask goes to <code className="bg-gray-100 px-1 rounded text-[#00A651] font-bold">/26</code> (leaves 6 host bits = 2^6 = 64).</p>
+              </div>
+            </div>
           </div>
         </div>
 
