@@ -945,21 +945,30 @@ export const CNDCContent: React.FC = () => {
         <div className="max-w-5xl mx-auto">
           <h3 className="text-2xl md:text-3xl font-black text-center mb-8 md:mb-12">OSI 7-Layer Model</h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 md:gap-6">
+          <div className="space-y-4 md:space-y-6 mb-12">
             {[
-              { no: "7", name: "Application", desc: "Provides services to the user (HTTP, FTP, SMTP)" },
-              { no: "6", name: "Presentation", desc: "Translation, Encryption, Compression" },
-              { no: "5", name: "Session", desc: "Dialog control and synchronization" },
-              { no: "4", name: "Transport", desc: "Process-to-process delivery (TCP/UDP)" },
-              { no: "3", name: "Network", desc: "Logical addressing and routing" },
-              { no: "2", name: "Data Link", desc: "Framing, Physical addressing, Flow & Error control" },
-              { no: "1", name: "Physical", desc: "Bit transmission over physical medium" }
+              { no: "7", name: "Application Layer", color: "bg-purple-600", desc: "The user interface. Where network applications (like web browsers or email clients) access network services. Provides features like authentication and data formatting for user apps.", protocols: "HTTP, HTTPS, FTP, SMTP, DNS, SSH" },
+              { no: "6", name: "Presentation Layer", color: "bg-pink-600", desc: "The translator. Converts incoming and outgoing data from one presentation format to another (e.g., from clear text to encrypted ciphertext, or compressing a video file).", protocols: "SSL/TLS, JPEG, MPEG, ASCII" },
+              { no: "5", name: "Session Layer", color: "bg-rose-600", desc: "The dialogue controller. Establishes, manages, and terminates connections (sessions) between local and remote applications. Keeps different app streams separate.", protocols: "NetBIOS, PPTP, RPC" },
+              { no: "4", name: "Transport Layer", color: "bg-red-600", desc: "The traffic cop. Responsible for end-to-end communication, error recovery, and flow control. Breaks large data into smaller pieces called 'Segments'.", protocols: "TCP, UDP", devices: "Firewalls" },
+              { no: "3", name: "Network Layer", color: "bg-orange-600", desc: "The mailroom. Responsible for logical addressing (IP addresses) and routing. Determines the best path for data 'Packets' to travel across vastly different networks.", protocols: "IPv4, IPv6, ICMP, IPSec", devices: "Routers, Layer 3 Switches" },
+              { no: "2", name: "Data Link Layer", color: "bg-emerald-600", desc: "The bridge. Responsible for physical MAC addressing, error detection in the physical layer, and framing data. Packages data into 'Frames' for local delivery.", protocols: "Ethernet, Wi-Fi (802.11), MAC, ARP, VLANs", devices: "Switches, Bridges" },
+              { no: "1", name: "Physical Layer", color: "bg-blue-600", desc: "The cables. Converts digital data into physical signals (electrical volts, light pulses, or radio waves) to be transmitted over physical medium strictly as 'Bits' (0s and 1s).", protocols: "100Base-T, DSL, ISDN", devices: "Hubs, Cables, Repeaters, Modems" }
             ].map((layer) => (
-              <motion.div key={layer.no} whileHover={{ y: -8 }} className="bg-white p-4 md:p-8 rounded-[24px] md:rounded-[32px] shadow-2xl text-center border-t-4 md:border-t-8 border-[#006400] flex flex-col items-center">
-                <div className="text-4xl md:text-7xl font-black text-gray-100 mb-2 md:mb-4">{layer.no}</div>
-                <h4 className="font-black text-xs md:text-xl mb-1 md:mb-3 leading-tight">{layer.name}</h4>
-                <p className="text-[8px] md:text-xs text-gray-600 leading-relaxed hidden sm:block">{layer.desc}</p>
-              </motion.div>
+              <div key={layer.no} className="flex flex-col md:flex-row bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow group">
+                <div className={`${layer.color} text-white flex flex-col justify-center items-center p-6 md:w-56 shrink-0 relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="text-5xl md:text-7xl font-black opacity-30 mb-2 relative z-10 transition-transform group-hover:scale-110">L{layer.no}</div>
+                  <h4 className="font-black text-center text-sm md:text-lg relative z-10 tracking-wide uppercase">{layer.name}</h4>
+                </div>
+                <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-4 md:space-y-0">
+                  <p className="text-xs md:text-sm text-gray-700 leading-relaxed font-medium">{t(layer.desc, layer.desc)}</p>
+                  <div className="flex flex-wrap gap-2 pt-4">
+                    <span className="px-3 py-1.5 bg-gray-50 text-gray-600 text-[10px] md:text-xs font-black rounded-lg border border-gray-200 uppercase tracking-widest">{t('Protocols', 'پروٹوکول')}: <span className="text-[#006400] ml-1">{layer.protocols}</span></span>
+                    {layer.devices && <span className="px-3 py-1.5 bg-gray-50 text-gray-600 text-[10px] md:text-xs font-black rounded-lg border border-gray-200 uppercase tracking-widest">{t('Hardware', 'ہارڈویئر')}: <span className="text-[#00A651] ml-1">{layer.devices}</span></span>}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
@@ -1154,28 +1163,36 @@ export const CNDCContent: React.FC = () => {
         </div>
 
         <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-8 text-[#006400]">{t('ARP Protocol Animation', 'ARP Protocol Animation')}</h3>
+          <div className="mb-8 md:mb-10 text-center md:text-left">
+            <h3 className="text-xl md:text-3xl font-black mb-4 flex justify-center md:justify-start items-center gap-2 md:gap-3 text-[#006400]">
+              <Search size={28} className="md:w-10 md:h-10 text-orange-500" /> {t('ARP Protocol: The Missing Link', 'ARP پروٹوکول: گمشدہ لنک')}
+            </h3>
+            <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-3xl font-medium">
+              {t('Computers communicate over Local Networks (Layer 2) using Physical MAC Addresses, but internet applications only know Logical IP Addresses (Layer 3). Even if your PC knows a server\'s IP, it cannot physically build the Ethernet frame without the MAC address! ARP acts as the translator to fix this.', 'کمپیوٹر لوکل نیٹ ورکس پر میک ایڈریسز کا استعمال کرتے ہوئے بات چیت کرتے ہیں، لیکن انٹرنیٹ ایپلیکیشنز صرف آئی پی ایڈریسز کو جانتی ہیں۔ ARP ان دونوں کے درمیان مترجم کا کام کرتا ہے۔')}
+            </p>
+          </div>
+
           <ARPAnimation />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mt-8 md:mt-12">
-            <div className="p-6 md:p-10 bg-pak-green text-white rounded-[24px] md:rounded-[32px] shadow-xl">
+            <div className="p-6 md:p-10 bg-gradient-to-br from-orange-400 to-red-500 text-white rounded-[24px] md:rounded-[32px] shadow-xl hover:-translate-y-2 transition-transform">
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
                 <Share2 size={24} className="md:w-8 md:h-8" />
                 <p className="text-xl md:text-2xl font-black">{t('ARP Request', 'ARP Request')}</p>
               </div>
               <p className="text-2xl md:text-4xl font-black mb-2 md:mb-4">BROADCAST</p>
-              <p className="text-[10px] md:text-sm opacity-80 leading-relaxed">
-                {t('Sent to all devices on the local network. "Who has this IP? Please tell me your MAC address."', 'Sent to all devices on the local network. "Who has this IP? Please tell me your MAC address."')}
+              <p className="text-[10px] md:text-sm md:text-base opacity-90 leading-relaxed font-bold">
+                {t('Sent to ALL devices on the local switch. It blindly shouts: "Hey everyone! Whoever owns IP 192.168.1.5, please reply to me and tell me your Hardware MAC Address!"', 'یہ نیٹ ورک پر موجود تمام آلات کو بھیجا جاتا ہے۔ یہ پوچھتا ہے کہ مطلوبہ آئی پی کا میک ایڈریس کیا ہے۔')}
               </p>
             </div>
-            <div className="p-6 md:p-10 bg-pak-light-green text-white rounded-[24px] md:rounded-[32px] shadow-xl">
+            <div className="p-6 md:p-10 bg-gradient-to-br from-[#006400] to-[#00A651] text-white rounded-[24px] md:rounded-[32px] shadow-xl hover:-translate-y-2 transition-transform">
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
                 <ArrowRight size={24} className="md:w-8 md:h-8" />
                 <p className="text-xl md:text-2xl font-black">{t('ARP Reply', 'ARP Reply')}</p>
               </div>
               <p className="text-2xl md:text-4xl font-black mb-2 md:mb-4">UNICAST</p>
-              <p className="text-[10px] md:text-sm opacity-80 leading-relaxed">
-                {t('Sent directly back to the requester. "I have that IP, and here is my MAC address."', 'Sent directly back to the requester. "I have that IP, and here is my MAC address."')}
+              <p className="text-[10px] md:text-sm md:text-base opacity-90 leading-relaxed font-bold">
+                {t('Sent DIRECTLY and privately back to the original requester. The target device answers: "That\'s my IP! Here is my exact MAC Address. Save it in your ARP Cache!"', 'یہ خاص طور پر اصل درخواست کنندہ کو واپس بھیجا جاتا ہے۔ ہدف والا آلہ اپنا درست میک ایڈریس فراہم کرتا ہے۔')}
               </p>
             </div>
           </div>
