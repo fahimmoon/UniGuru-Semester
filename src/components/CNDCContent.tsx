@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { motion, Reorder } from 'framer-motion';
-import { 
-  Mail, User, Activity, Share2, Layers, Hash, Globe, Cpu, Server, 
+import {
+  Mail, User, Activity, Share2, Layers, Hash, Globe, Cpu, Server,
   ArrowRight, Info, CheckCircle2, Award, BookOpen, Users, Calendar,
   Shield, Laptop, Network, Zap, Box, Radio, XCircle, PlayCircle, Cloud, Search
 } from 'lucide-react';
@@ -161,32 +161,32 @@ const PacketFlowSimulation = () => {
   const { t } = useLanguage();
 
   const steps = [
-    { 
-      title: "Encapsulation", 
+    {
+      title: "Encapsulation",
       desc: "Client creates HTTP request. Data is wrapped in Transport (TCP), Network (IP), and Data Link (Ethernet) headers.",
       layers: ["Data", "TCP", "IP", "Eth"],
       activeNode: "client"
     },
-    { 
-      title: "Switching (L2)", 
+    {
+      title: "Switching (L2)",
       desc: "Switch receives Ethernet frame. It looks at the Destination MAC address and forwards it to the Router.",
       layers: ["Eth"],
       activeNode: "switch"
     },
-    { 
-      title: "Routing (L3)", 
+    {
+      title: "Routing (L3)",
       desc: "Router decapsulates Data Link layer. It looks at Destination IP, makes a routing decision, and re-encapsulates for the next hop.",
       layers: ["IP"],
       activeNode: "router"
     },
-    { 
-      title: "Internet Traversal", 
+    {
+      title: "Internet Traversal",
       desc: "Packet travels through multiple ISP routers across the globe using BGP and other protocols.",
       layers: ["IP"],
       activeNode: "internet"
     },
-    { 
-      title: "Decapsulation", 
+    {
+      title: "Decapsulation",
       desc: "Web Server receives the packet. It strips away Eth, IP, and TCP headers to process the HTTP request.",
       layers: ["Data"],
       activeNode: "server"
@@ -237,8 +237,8 @@ const PacketFlowSimulation = () => {
         </div>
 
         {/* Moving Packet */}
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             left: `${(step / 4) * 80 + 10}%`,
             opacity: [0, 1, 1, 0],
             scale: [0.8, 1.2, 1.2, 0.8]
@@ -261,14 +261,14 @@ const PacketFlowSimulation = () => {
           </div>
 
           <div className="flex gap-3 md:gap-4">
-            <button 
+            <button
               onClick={() => setStep(prev => Math.max(0, prev - 1))}
               disabled={step === 0}
               className="flex-1 py-3 md:py-4 bg-gray-100 text-gray-400 rounded-xl md:rounded-2xl font-black text-sm md:text-base disabled:opacity-50"
             >
               {t('Previous', 'پچھلا')}
             </button>
-            <button 
+            <button
               onClick={() => setStep(prev => (prev + 1) % 5)}
               className="flex-1 py-3 md:py-4 bg-[#006400] text-white rounded-xl md:rounded-2xl font-black text-sm md:text-base shadow-xl hover:bg-[#00A651] transition-all"
             >
@@ -281,7 +281,7 @@ const PacketFlowSimulation = () => {
           <h4 className="text-[10px] md:text-xs font-black uppercase tracking-widest text-gray-500 mb-4 md:mb-6">{t('Layer Stack (Encapsulation)', 'لیئر اسٹیک')}</h4>
           <div className="space-y-1.5 md:space-y-2">
             {steps[step].layers.map((layer, i) => (
-              <motion.div 
+              <motion.div
                 key={layer}
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -319,7 +319,7 @@ const DNSSection = () => {
           <p className="text-xs md:text-sm leading-relaxed text-gray-700">
             {t('DNS is the "Phonebook of the Internet". It translates human-readable domain names (like google.com) into machine-readable IP addresses (like 142.250.190.46).', 'DNS انٹرنیٹ کی "فون بک" ہے۔ یہ انسانی پڑھنے کے قابل ڈومین ناموں کو مشین کے پڑھنے کے قابل آئی پی ایڈریسز میں تبدیل کرتا ہے۔')}
           </p>
-          
+
           <div className="bg-emerald-50 p-6 rounded-[24px] md:rounded-3xl border border-emerald-100">
             <h4 className="font-black text-sm md:text-base text-[#006400] mb-3 md:mb-4">{t('Common Record Types', 'عام ریکارڈ کی اقسام')}</h4>
             <div className="space-y-2 md:space-y-3">
@@ -360,7 +360,7 @@ const DNSSection = () => {
               </div>
             ))}
           </div>
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 50, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute right-4 md:right-8 top-8 md:top-12 text-[#00A651] opacity-10 md:opacity-20"
@@ -400,7 +400,7 @@ const OSIQuiz = () => {
     "Physical"
   ];
 
-  const [items, setItems] = React.useState(() => 
+  const [items, setItems] = React.useState(() =>
     [...correctOrder].sort(() => Math.random() - 0.5)
   );
 
@@ -417,8 +417,8 @@ const OSIQuiz = () => {
 
       <Reorder.Group axis="y" values={items} onReorder={setItems} className="space-y-2 md:space-y-3">
         {items.map((item) => (
-          <Reorder.Item 
-            key={item} 
+          <Reorder.Item
+            key={item}
             value={item}
             className={`p-3 md:p-5 rounded-xl md:rounded-2xl border-2 cursor-grab active:cursor-grabbing transition-all flex items-center justify-between shadow-sm group
               ${isCorrect ? 'bg-emerald-50 border-emerald-500' : 'bg-gray-50 border-gray-100 hover:border-[#006400]/30'}
@@ -443,7 +443,7 @@ const OSIQuiz = () => {
                 </span>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2 md:gap-3">
               {isCorrect ? (
                 <CheckCircle2 className="text-[#00A651] md:w-6 md:h-6" size={20} />
@@ -458,7 +458,7 @@ const OSIQuiz = () => {
       </Reorder.Group>
 
       {isCorrect && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="mt-8 md:mt-10 p-6 md:p-8 bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-200 rounded-[24px] md:rounded-[32px] text-center shadow-xl"
@@ -489,7 +489,7 @@ const ARPAnimation = () => {
       <div className="flex justify-between items-center h-full max-w-3xl mx-auto relative px-12">
         {/* Host A */}
         <div className="flex flex-col items-center gap-3 z-10">
-          <motion.div 
+          <motion.div
             animate={step === 1 ? { scale: [1, 1.1, 1] } : {}}
             className="p-5 bg-[#006400] text-white rounded-3xl shadow-xl"
           >
@@ -512,7 +512,7 @@ const ARPAnimation = () => {
 
         {/* Host B */}
         <div className="flex flex-col items-center gap-3 z-10">
-          <motion.div 
+          <motion.div
             animate={step === 2 ? { scale: [1, 1.1, 1] } : {}}
             className="p-5 bg-[#00A651] text-white rounded-3xl shadow-xl"
           >
@@ -548,7 +548,7 @@ const ARPAnimation = () => {
               >
                 <span className="text-[10px] font-black text-yellow-900">REQ</span>
               </motion.div>
-              
+
               {/* Switch to B (Broadcast part 1) */}
               <motion.div
                 initial={{ x: "50%", y: "50%", opacity: 0 }}
@@ -611,8 +611,8 @@ const ARPAnimation = () => {
             {step === 2 && t("ARP Reply: 'I am 1.2, my MAC is BB:BB' (Unicast)", "ARP Reply: 'I am 1.2, my MAC is BB:BB' (Unicast)")}
           </p>
         </div>
-        
-        <button 
+
+        <button
           onClick={nextStep}
           className="group px-8 py-3 bg-[#006400] text-white rounded-2xl text-sm font-black shadow-xl hover:bg-[#00A651] transition-all flex items-center gap-3 active:scale-95"
         >
@@ -631,6 +631,83 @@ const ARPAnimation = () => {
             {step === 1 && t("Requesting...", "Requesting...")}
             {step === 2 && t("Replying...", "Replying...")}
           </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TCPvsUDPSection = () => {
+  const { t } = useLanguage();
+  return (
+    <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl mt-8 md:mt-16">
+      <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
+        <Layers size={28} className="md:w-8 md:h-8" /> {t('Transport Layer: TCP vs UDP', 'ٹرانسپورٹ لیئر: TCP بمقابلہ UDP')}
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="p-6 md:p-8 bg-blue-50 border-2 border-blue-100 rounded-[24px] md:rounded-[32px] shadow-sm transform hover:-translate-y-2 transition-transform duration-300">
+          <h4 className="font-black text-xl md:text-2xl text-blue-900 mb-4 flex items-center gap-2">
+            <Shield size={24} /> TCP (Transmission Control Protocol)
+          </h4>
+          <p className="text-sm text-blue-800 mb-4 font-bold">{t('Connection-Oriented & Reliable', 'کنکشن پر مبنی اور قابل اعتماد')}</p>
+          <ul className="text-[10px] md:text-xs space-y-3 text-gray-700">
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-blue-600 flex-shrink-0 mt-0.5" /> {t('Guarantees delivery of data (Three-way Handshake)', 'ڈیٹا کی ترسیل کی ضمانت (تھری وے ہینڈ شیک)')}</li>
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-blue-600 flex-shrink-0 mt-0.5" /> {t('Error checking and recovery (Retransmission)', 'غلطی کی جانچ اور بازیابی (دوبارہ ترسیل)')}</li>
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-blue-600 flex-shrink-0 mt-0.5" /> {t('Slower but highly accurate and ordered', 'سست لیکن انتہائی درست اور منظم')}</li>
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-blue-600 flex-shrink-0 mt-0.5" /> {t('Use Cases: Web Browsing (HTTP/HTTPS), Email (SMTP), File Transfer (FTP)', 'استعمال: ویب براؤزنگ، ای میل، فائل ٹرانسفر')}</li>
+          </ul>
+        </div>
+        <div className="p-6 md:p-8 bg-orange-50 border-2 border-orange-100 rounded-[24px] md:rounded-[32px] shadow-sm transform hover:-translate-y-2 transition-transform duration-300">
+          <h4 className="font-black text-xl md:text-2xl text-orange-900 mb-4 flex items-center gap-2">
+            <Zap size={24} /> UDP (User Datagram Protocol)
+          </h4>
+          <p className="text-sm text-orange-800 mb-4 font-bold">{t('Connectionless & Fast', 'بغیر کنکشن اور تیز')}</p>
+          <ul className="text-[10px] md:text-xs space-y-3 text-gray-700">
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-orange-600 flex-shrink-0 mt-0.5" /> {t('Best-effort delivery (No Handshake, "Fire and Forget")', 'بہترین کوشش کی ترسیل (کوئی ہینڈ شیک نہیں)')}</li>
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-orange-600 flex-shrink-0 mt-0.5" /> {t('No error recovery or retransmission mechanism', 'کوئی غلطی کی بازیابی کا طریقہ کار نہیں')}</li>
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-orange-600 flex-shrink-0 mt-0.5" /> {t('Very fast, high performance, packets can drop', 'بہت تیز، اعلی کارکردگی، پیکٹ ضائع ہو سکتے ہیں')}</li>
+            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-orange-600 flex-shrink-0 mt-0.5" /> {t('Use Cases: Video Streaming, Voice over IP (VoIP), Online Gaming, DNS', 'استعمال: ویڈیو اسٹریمنگ، وائس کالز، آن لائن گیمنگ')}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const NetworkDevicesSection = () => {
+  const { t } = useLanguage();
+  return (
+    <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl mt-8 md:mt-16">
+      <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
+        <Server size={28} className="md:w-8 md:h-8" /> {t('Network Devices: Hub vs Switch vs Router', 'نیٹ ورک ڈیوائسز: ہب، سوئچ اور راؤٹر')}
+      </h3>
+      <div className="space-y-6 md:space-y-8">
+        <div className="flex flex-col md:flex-row gap-6 items-center p-6 bg-red-50 rounded-3xl border border-red-100 hover:shadow-lg transition-shadow">
+          <div className="w-16 h-16 bg-red-100 text-red-600 flex items-center justify-center rounded-2xl shadow-inner flex-shrink-0">
+            <Radio size={32} />
+          </div>
+          <div>
+            <h4 className="font-black text-lg text-red-900 mb-2">{t('Hub (Layer 1 - Physical)', 'ہب (لیئر 1)')}</h4>
+            <p className="text-xs text-red-800 leading-relaxed font-medium">{t('A legacy, non-intelligent device. When it receives a packet on one port, it blindly broadcasts it out of all other connected ports. This causes high collisions, slow speeds, and terrible security risks. Operates strictly in Half-Duplex.', 'ایک پرانی، غیر ذہین ڈیوائس۔ یہ ایک پورٹ پر موصول ہونے والے ڈیٹا کو آنکھیں بند کرکے باقی تمام پورٹس پر نشر کرتا ہے۔ اس سے تصادم اور حفاظتی خطرات بڑھتے ہیں۔')}</p>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row gap-6 items-center p-6 bg-emerald-50 rounded-3xl border border-emerald-100 hover:shadow-lg transition-shadow">
+          <div className="w-16 h-16 bg-emerald-200 text-emerald-700 flex items-center justify-center rounded-2xl shadow-inner flex-shrink-0">
+            <Server size={32} />
+          </div>
+          <div>
+            <h4 className="font-black text-lg text-emerald-900 mb-2">{t('Switch (Layer 2 - Data Link)', 'سوئچ (لیئر 2)')}</h4>
+            <p className="text-xs text-emerald-800 leading-relaxed font-medium">{t('An intelligent localized filtering device. It actively learns MAC addresses and builds a MAC Address Table. When a frame arrives, the switch intelligently forwards it ONLY to the destination port, eliminating network collisions. Operates in Full-Duplex.', 'ایک ذہین مقامی ڈیوائس۔ یہ میک ایڈریس سیکھتا ہے اور صرف مخصوص پورٹ پر ڈیٹا بھیجتا ہے جس سے تصادم ختم ہوجاتا ہے۔')}</p>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row gap-6 items-center p-6 bg-purple-50 rounded-3xl border border-purple-100 hover:shadow-lg transition-shadow">
+          <div className="w-16 h-16 bg-purple-200 text-purple-700 flex items-center justify-center rounded-2xl shadow-inner flex-shrink-0">
+            <Cpu size={32} />
+          </div>
+          <div>
+            <h4 className="font-black text-lg text-purple-900 mb-2">{t('Router (Layer 3 - Network)', 'راؤٹر (لیئر 3)')}</h4>
+            <p className="text-xs text-purple-800 leading-relaxed font-medium">{t('Connects fundamentally different networks together (e.g., your home LAN to the public WAN/Internet). It inspects Destination IP Addresses to determine the absolute best path to forward a packet using internal Routing Tables.', 'مختلف نیٹ ورکس کو آپس میں جوڑتا ہے۔ یہ آئی پی ایڈریسز کا تجزیہ کرتا ہے تاکہ ڈیٹا کو آگے بڑھانے کا بہترین راستہ تلاش کرسکے۔')}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -696,11 +773,11 @@ export const CNDCContent: React.FC = () => {
         {/* 1-1 Data Communications */}
         <div className="bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
           <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 text-[#006400]">1-1 Data Communications</h3>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-6">
             {["Message", "Sender", "Receiver", "Transmission Medium", "Protocol"].map((item, i) => (
               <motion.div key={i} whileHover={{ y: -8 }} className="bg-[#006400] text-white p-4 md:p-8 rounded-[24px] md:rounded-[32px] text-center shadow-xl">
-                <div className="text-3xl md:text-6xl mb-2 md:mb-4 opacity-50 font-black">0{i+1}</div>
+                <div className="text-3xl md:text-6xl mb-2 md:mb-4 opacity-50 font-black">0{i + 1}</div>
                 <h4 className="font-black text-[10px] md:text-xl leading-tight">{t(item, item)}</h4>
               </motion.div>
             ))}
@@ -808,13 +885,13 @@ export const CNDCContent: React.FC = () => {
                 <rect x="20" y="50" width="60" height="40" rx="8" fill="#006400" />
                 <text x="50" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">LAN</text>
                 <text x="50" y="115" textAnchor="middle" fill="gray" fontSize="10">Karachi</text>
-                
+
                 <path d="M 80 70 Q 150 30 220 70" fill="none" stroke="#00A651" strokeWidth="4" strokeDasharray="6 4" />
-                
+
                 <rect x="220" y="50" width="60" height="40" rx="8" fill="#006400" />
                 <text x="250" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">LAN</text>
                 <text x="250" y="115" textAnchor="middle" fill="gray" fontSize="10">Gilgit</text>
-                
+
                 <text x="150" y="85" textAnchor="middle" fill="#006400" fontSize="14" fontWeight="bold">WAN</text>
               </svg>
             </div>
@@ -828,7 +905,7 @@ export const CNDCContent: React.FC = () => {
 
         <div className="max-w-5xl mx-auto">
           <h3 className="text-2xl md:text-3xl font-black text-center mb-8 md:mb-12">OSI 7-Layer Model</h3>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 md:gap-6">
             {[
               { no: "7", name: "Application", desc: "Provides services to the user (HTTP, FTP, SMTP)" },
@@ -869,13 +946,13 @@ export const CNDCContent: React.FC = () => {
               <div key={i} className="space-y-3 md:space-y-4">
                 <h4 className="font-black text-center text-sm md:text-lg">{item.class}</h4>
                 <div className="h-10 md:h-12 w-full flex rounded-lg md:rounded-xl overflow-hidden shadow-inner border border-gray-200">
-                  <div 
+                  <div
                     className={`${item.color} h-full flex items-center justify-center text-white text-[8px] md:text-[10px] font-bold`}
                     style={{ width: `${(item.net / 32) * 100}%` }}
                   >
                     NET ({item.net})
                   </div>
-                  <div 
+                  <div
                     className="bg-gray-100 h-full flex items-center justify-center text-gray-400 text-[8px] md:text-[10px] font-bold"
                     style={{ width: `${(item.host / 32) * 100}%` }}
                   >
@@ -945,7 +1022,7 @@ export const CNDCContent: React.FC = () => {
           <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
             <Shield size={24} className="md:w-8 md:h-8" /> {t('Private IP Address Ranges', 'Private IP Address Ranges')}
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
             {[
               { range: "10.0.0.0/8", use: "Large Enterprise", color: "bg-blue-50 text-blue-900" },
@@ -997,7 +1074,7 @@ export const CNDCContent: React.FC = () => {
         <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
           <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-8 text-[#006400]">{t('ARP Protocol Animation', 'ARP Protocol Animation')}</h3>
           <ARPAnimation />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mt-8 md:mt-12">
             <div className="p-6 md:p-10 bg-pak-green text-white rounded-[24px] md:rounded-[32px] shadow-xl">
               <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
@@ -1023,6 +1100,10 @@ export const CNDCContent: React.FC = () => {
         </div>
 
         <DNSSection />
+
+        {/* NEW ENHANCED CONTENT */}
+        <NetworkDevicesSection />
+        <TCPvsUDPSection />
       </section>
 
     </div>
