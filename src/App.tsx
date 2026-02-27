@@ -14,7 +14,7 @@ import { Profile } from './components/Profile';
 import { CNDCContent } from './components/CNDCContent';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Search, Bookmark, Download, Share2, Award, Star, ArrowLeft } from 'lucide-react';
+import { BookOpen, Search, Bookmark, Download, Share2, Award, Star, ArrowLeft, Calculator, Laptop } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -24,8 +24,8 @@ const AppContent: React.FC = () => {
   const renderCourseContent = (courseId: string) => {
     if (courseId === 'cndc') {
       return (
-        <div className="space-y-4 pb-24">
-          <div className="p-4 flex items-center gap-4 sticky top-0 bg-gray-50 border-b border-gray-200 z-40">
+        <div className="space-y-6 pb-8">
+          <div className="p-4 flex items-center gap-4 sticky top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 z-40 shadow-sm">
             <button
               onClick={() => setSelectedCourse(null)}
               className="p-2 bg-white rounded-full shadow-sm text-pak-green"
@@ -78,19 +78,37 @@ const AppContent: React.FC = () => {
         return <Dashboard onCourseSelect={setSelectedCourse} />;
       case 'learn':
         return (
-          <div className="p-4 space-y-4">
-            <h2 className="text-xl font-black text-gray-900 px-2">{t('Quick Learn', 'فوری سیکھیں')}</h2>
-            <OSIModel />
-            <ARPAnimation />
+          <div className="space-y-8 pb-12">
+            <div className="bg-gradient-to-br from-[#006400] to-[#00A651] text-white p-8 rounded-b-[40px] shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
+              <div className="bg-white/20 w-14 h-14 flex items-center justify-center rounded-2xl mb-6 backdrop-blur-md shadow-inner border border-white/20">
+                <Laptop size={28} />
+              </div>
+              <h2 className="text-3xl font-black relative z-10">{t('Quick Learn', 'فوری سیکھیں')}</h2>
+              <p className="opacity-90 mt-2 text-sm font-medium relative z-10">{t('Bite-sized interactive networking concepts.', 'مختصر انٹرایکٹو نیٹ ورکنگ تصورات۔')}</p>
+            </div>
+            <div className="px-4 space-y-8">
+              <OSIModel />
+              <ARPAnimation />
+            </div>
           </div>
         );
       case 'tools':
         return (
-          <div className="space-y-4">
-            <h2 className="text-xl font-black text-gray-900 px-6 pt-4">{t('Network Tools', 'نیٹ ورک ٹولز')}</h2>
-            <IPv4Calculator />
-            <SubnetCalculator />
-            <Quiz />
+          <div className="space-y-8 pb-12">
+            <div className="bg-gradient-to-br from-indigo-700 to-blue-500 text-white p-8 rounded-b-[40px] shadow-2xl relative overflow-hidden">
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -mb-10 -mr-10" />
+              <div className="bg-white/20 w-14 h-14 flex items-center justify-center rounded-2xl mb-6 backdrop-blur-md shadow-inner border border-white/20">
+                <Calculator size={28} />
+              </div>
+              <h2 className="text-3xl font-black relative z-10">{t('Network Tools', 'نیٹ ورک ٹولز')}</h2>
+              <p className="opacity-90 mt-2 text-sm font-medium relative z-10">{t('Calculate subnets, analyze IPs, and test your knowledge.', 'سب نیٹ کا حساب لگائیں، آئی پی کا تجزیہ کریں، اور اپنے علم کی جانچ کریں۔')}</p>
+            </div>
+            <div className="px-4 space-y-8">
+              <IPv4Calculator />
+              <SubnetCalculator />
+              <Quiz />
+            </div>
           </div>
         );
       case 'cert':
