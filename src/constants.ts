@@ -11,6 +11,8 @@ export interface Course {
 
 export const COURSES: Course[] = [
   { id: 'cndc', title: 'Computer Networks', titleUr: 'کمپیوٹر نیٹ ورکس', icon: 'Network', color: 'bg-pak-green', chapters: 5 },
+  { id: 'ai', title: 'Artificial Intelligence', titleUr: 'مصنوعی ذہانت', icon: 'Cpu', color: 'bg-purple-600', chapters: 15 },
+  { id: 'tbw', title: 'Business Writing', titleUr: 'بزنس رائٹنگ', icon: 'Edit3', color: 'bg-emerald-600', chapters: 15 },
   { id: 'os', title: 'Operating Systems', titleUr: 'آپریٹنگ سسٹمز', icon: 'Cpu', color: 'bg-blue-600', chapters: 8 },
   { id: 'db', title: 'Database Systems', titleUr: 'ڈیٹا بیس سسٹمز', icon: 'Database', color: 'bg-orange-600', chapters: 6 },
 ];

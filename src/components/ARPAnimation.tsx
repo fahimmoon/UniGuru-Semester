@@ -92,6 +92,7 @@ export const ARPAnimation: React.FC = () => {
           <div className="flex gap-2">
             <button
               onClick={() => setStep(0)}
+              title={t("Reset Animation", "اینیمیشن ری سیٹ کریں")}
               className="p-4 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-all"
             >
               <RefreshCw size={20} />

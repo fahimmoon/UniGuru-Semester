@@ -1,11 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { motion, Reorder } from 'framer-motion';
+import { motion, Reorder, AnimatePresence } from 'framer-motion';
 import {
   Mail, User, Activity, Share2, Layers, Hash, Globe, Cpu, Server,
   ArrowRight, Info, CheckCircle2, Award, BookOpen, Users, Calendar,
-  Shield, Laptop, Network, Zap, Box, Radio, XCircle, PlayCircle, Cloud, Search
+  Shield, Laptop, Network, Zap, Box, Radio, XCircle, PlayCircle, Cloud, Search,
+  Compass, Link, Wifi, Lock, Code, Headphones, Globe2, ChevronRight, ChevronDown, Rocket, Target, Send, Database, BarChart3, RefreshCw, PenTool, Terminal
 } from 'lucide-react';
+
+const WeekCard = ({ week, title, titleUr, isExpanded, onToggle, children }: any) => {
+  const { t } = useLanguage();
+  return (
+    <div className={`transition-all duration-500 mb-6 ${isExpanded ? 'scale-[1.02]' : 'hover:scale-[1.01]'}`}>
+      <button
+        onClick={onToggle}
+        className={`w-full text-left p-6 md:p-8 rounded-[32px] md:rounded-[40px] flex items-center justify-between transition-all duration-500 shadow-2xl ${isExpanded ? 'bg-[#006400] text-white shadow-[#006400]/40' : 'bg-white text-gray-900 border border-gray-100 hover:border-[#00A651]/30'
+          }`}
+      >
+        <div className="flex items-center gap-4 md:gap-8">
+          <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-[24px] flex items-center justify-center font-black text-lg md:text-2xl shadow-xl transform transition-transform duration-500 ${isExpanded ? 'bg-white text-[#006400] rotate-12' : 'bg-[#006400] text-white'
+            }`}>
+            {week}
+          </div>
+          <div className="space-y-1">
+            <h3 className="font-black text-xl md:text-3xl tracking-tight leading-none">{title}</h3>
+            <p className={`font-urdu text-base md:text-xl font-medium transition-opacity duration-500 ${isExpanded ? 'opacity-90' : 'text-[#00A651]'}`}>{titleUr}</p>
+          </div>
+        </div>
+        <div className={`p-2 md:p-3 rounded-full transition-all duration-500 ${isExpanded ? 'bg-white/20 rotate-180' : 'bg-gray-50'}`}>
+          {isExpanded ? <ChevronDown size={24} /> : <ChevronRight size={24} />}
+        </div>
+      </button>
+
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="overflow-hidden"
+          >
+            <div className="mt-4 p-6 md:p-12 bg-white rounded-[40px] md:rounded-[60px] border border-gray-100 shadow-2xl space-y-12">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const LectureNote = ({ title, content, icon: Icon }: any) => {
+  const { t } = useLanguage();
+  return (
+    <div className="p-6 md:p-8 bg-linear-to-br from-gray-50 to-white rounded-[32px] border border-gray-100 flex gap-6 items-start group hover:border-[#00A651]/20 transition-all">
+      <div className="w-14 h-14 shrink-0 bg-white rounded-2xl shadow-lg border border-gray-50 flex items-center justify-center group-hover:scale-110 transition-transform">
+        <Icon size={28} className="text-[#006400]" />
+      </div>
+      <div className="space-y-2">
+        <h5 className="font-black text-gray-900 text-lg tracking-tight uppercase group-hover:text-[#006400] transition-colors">{t(title, title)}</h5>
+        <p className="text-xs md:text-sm text-gray-500 leading-relaxed font-medium">{t(content, content)}</p>
+      </div>
+    </div>
+  );
+};
 
 const DiagramNode = ({ x, y, label, color = "#006400" }: { x: number; y: number; label?: string; color?: string }) => (
   <motion.g
@@ -835,6 +894,7 @@ const CloudSection = () => {
 
 export const CNDCContent: React.FC = () => {
   const { t } = useLanguage();
+  const [expandedWeek, setExpandedWeek] = useState<number>(1);
 
   return (
     <div className="min-h-screen bg-[#F8FAF9] pb-32">
@@ -883,450 +943,821 @@ export const CNDCContent: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* ==================== CHAPTER 1 ==================== */}
-      <section className="max-w-6xl mx-auto px-4 md:px-6 space-y-8 md:space-y-16 mt-12 md:mt-16">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-[#006400]">Chapter 1 – Introduction</h2>
+      {/* ==================== COURSE CURRICULUM ==================== */}
+      <section className="max-w-6xl mx-auto px-4 md:px-6 mt-12 md:mt-16 pb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-black text-[#006400] mb-4">{t("Course Curriculum", "کورس کا نصاب")}</h2>
+          <p className="text-gray-500 font-medium">{t("From Physical Signals to Global Applications", "فزیکل سگنلز سے گلوبل ایپلیکیشنز تک")}</p>
         </div>
 
-        {/* 1-1 Data Communications */}
-        <div className="bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 text-[#006400]">1-1 Data Communications</h3>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-6 mb-8">
-            {[
-              { label: "Message", desc: "The data or information to be communicated (text, video, audio)." },
-              { label: "Sender", desc: "The device that sends the data message (computer, phone, camera)." },
-              { label: "Receiver", desc: "The device that receives the message (server, workstation, TV)." },
-              { label: "Transmission Medium", desc: "The physical path by which a message travels (cable, fiber, air)." },
-              { label: "Protocol", desc: "A set of rules that governs data communications, ensuring both sides understand each other." }
-            ].map((item, i) => (
-              <motion.div key={i} whileHover={{ y: -8 }} className="bg-[#006400] text-white p-4 md:p-6 rounded-[24px] md:rounded-[32px] text-center shadow-xl flex flex-col items-center justify-center group relative overflow-hidden">
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="text-3xl md:text-6xl mb-2 opacity-50 font-black relative z-10">0{i + 1}</div>
-                <h4 className="font-black text-[12px] md:text-sm leading-tight relative z-10 mb-2">{t(item.label, item.label)}</h4>
-                <p className="text-[8px] md:text-[10px] text-green-100/80 leading-snug hidden md:block">{t(item.desc, item.desc)}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-8 md:mt-12 bg-gray-50 p-6 md:p-10 rounded-[24px] md:rounded-[32px]">
-            <h4 className="font-black mb-4 md:mb-6 text-center text-lg md:text-xl text-[#006400]">Data Flow (Simplex vs Duplex)</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-6 bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <h5 className="font-black text-blue-800 text-lg mb-2">Simplex</h5>
-                <p className="text-xs text-gray-600 leading-relaxed">{t('Communication is strictly one-way, like a one-way street. Only one device on a link can transmit; the other can only receive (e.g., Keyboard to Monitor, Television Broadcasting).', 'رابطہ صرف ایک طرفہ ہوتا ہے۔ ایک آلہ صرف بھیج سکتا ہے اور دوسرا صرف وصول کر سکتا ہے۔')}</p>
-              </div>
-              <div className="p-6 bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <h5 className="font-black text-orange-800 text-lg mb-2">Half-Duplex</h5>
-                <p className="text-xs text-gray-600 leading-relaxed">{t('Each station can both transmit and receive, but NOT at the same time. While one transmits, the other must wait (e.g., Walkie-Talkies).', 'دونوں آلات بھیج اور وصول سکتے ہیں، لیکن ایک وقت میں نہیں۔ جیسے واکی ٹاکی۔')}</p>
-              </div>
-              <div className="p-6 bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <h5 className="font-black text-emerald-800 text-lg mb-2">Full-Duplex</h5>
-                <p className="text-xs text-gray-600 leading-relaxed">{t('Both stations can transmit and receive simultaneously. The link capacity is shared between the two signals going in opposite directions (e.g., Telephone Networks, Fast Ethernet).', 'دونوں آلات ایک ہی وقت میں بھیج اور وصول سکتے ہیں۔ جیسے ٹیلی فون نیٹ ورک۔')}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Topologies */}
-        <div className="bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-10 text-[#006400]">{t('Physical Topologies', 'Physical Topologies')}</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-            {["Star", "Bus", "Ring", "Mesh", "Tree", "Hybrid"].map((topo) => (
-              <div key={topo} className="bg-gray-50 p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-gray-100 flex flex-col">
-                <h4 className="font-black text-xl md:text-2xl text-[#006400] mb-4 md:mb-6">{topo}</h4>
-                <div className="bg-white p-3 md:p-4 rounded-xl md:rounded-2xl shadow-inner border border-gray-100 mb-4 md:mb-6">
-                  <TopologyDiagram type={topo} />
+        {/* Week 1: Introduction */}
+        <WeekCard
+          week={1}
+          title="Intro to Networks & Edge"
+          titleUr="نیٹ ورکس اور ایج کا تعارف"
+          isExpanded={expandedWeek === 1}
+          onToggle={() => setExpandedWeek(expandedWeek === 1 ? 0 : 1)}
+        >
+          <div className="space-y-8 md:space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="inline-flex px-4 py-1.5 bg-emerald-100 text-[#006400] rounded-full text-[10px] font-black uppercase tracking-widest items-center gap-2">
+                  <Compass size={14} />
+                  {t("Fundamental Concept", "بنیادی تصور")}
                 </div>
-                <div className="space-y-4 flex-1">
-                  <h5 className="font-black text-[10px] md:text-sm text-[#006400] uppercase tracking-wider">{t('Characteristics', 'Characteristics')}</h5>
-                  <ul className="text-[10px] md:text-xs space-y-1.5 md:space-y-2 text-gray-600">
-                    {topo === 'Star' && (
-                      <>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Centralized control via hub/switch', 'Centralized control via hub/switch')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Easy to install and reconfigure', 'Easy to install and reconfigure')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Robust: one link failure doesn\'t affect others', 'Robust: one link failure doesn\'t affect others')}</li>
-                      </>
-                    )}
-                    {topo === 'Bus' && (
-                      <>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Uses a single backbone cable', 'Uses a single backbone cable')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Inexpensive and simple cabling', 'Inexpensive and simple cabling')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Critical failure if backbone breaks', 'Critical failure if backbone breaks')}</li>
-                      </>
-                    )}
-                    {topo === 'Ring' && (
-                      <>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Data travels in one direction', 'Data travels in one direction')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Token passing prevents collisions', 'Token passing prevents collisions')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('High latency in large rings', 'High latency in large rings')}</li>
-                      </>
-                    )}
-                    {topo === 'Mesh' && (
-                      <>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Every node connected to every other node', 'Every node connected to every other node')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Maximum redundancy and privacy', 'Maximum redundancy and privacy')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Complex and expensive to implement', 'Complex and expensive to implement')}</li>
-                      </>
-                    )}
-                    {topo === 'Tree' && (
-                      <>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Hierarchical structure (Parent-Child)', 'Hierarchical structure (Parent-Child)')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Highly scalable and manageable', 'Highly scalable and manageable')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Root node is a single point of failure', 'Root node is a single point of failure')}</li>
-                      </>
-                    )}
-                    {topo === 'Hybrid' && (
-                      <>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Combination of two or more topologies', 'Combination of two or more topologies')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Flexible and tailored to needs', 'Flexible and tailored to needs')}</li>
-                        <li className="flex items-start gap-2"><Zap size={10} className="mt-0.5 text-[#00A651] flex-shrink-0" /> {t('Complex design and maintenance', 'Complex design and maintenance')}</li>
-                      </>
-                    )}
-                  </ul>
-                  <div className="pt-3 md:pt-4 border-t border-gray-100 mt-auto">
-                    <h5 className="font-black text-[8px] md:text-[10px] text-gray-400 uppercase tracking-widest mb-1 md:mb-2">{t('Common Use Case', 'Common Use Case')}</h5>
-                    <p className="text-[10px] md:text-xs font-bold text-[#006400]">
-                      {topo === 'Star' && t('Modern LANs, Home Wi-Fi Routers', 'Modern LANs, Home Wi-Fi Routers')}
-                      {topo === 'Bus' && t('Early Ethernet, Small temporary networks', 'Early Ethernet, Small temporary networks')}
-                      {topo === 'Ring' && t('Fiber Distributed Data Interface (FDDI)', 'Fiber Distributed Data Interface (FDDI)')}
-                      {topo === 'Mesh' && t('Military networks, Core ISP backbones', 'Military networks, Core ISP backbones')}
-                      {topo === 'Tree' && t('Campus networks, Corporate hierarchies', 'Campus networks, Corporate hierarchies')}
-                      {topo === 'Hybrid' && t('Large enterprise WANs, Internet structure', 'Large enterprise WANs, Internet structure')}
-                    </p>
+                <h4 className="text-2xl md:text-4xl font-black text-gray-900 leading-tight">
+                  {t("The Network Edge & Protocols", "نیٹ ورک ایج اور پروٹوکول")}
+                </h4>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed font-medium">
+                  {t("The 'Internet' is a network of networks. The Edge refers to the hosts (clients and servers) while the Core is the mesh of interconnected routers.", "انٹرنیٹ نیٹ ورکس کا ایک نیٹ ورک ہے۔ ایج سے مراد ہوسٹس (کلائنٹس اور سرورز) ہیں جبکہ کور آپس میں جڑے ہوئے راؤٹرز کا میش ہے۔")}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['Protocols', 'Algorithms', 'Layered Arch', 'Globalization'].map(tag => (
+                    <span key={tag} className="px-3 py-1 bg-gray-50 border border-gray-100 rounded-lg text-[10px] font-black text-gray-400 uppercase tracking-tighter italic">#{t(tag, tag)}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-gray-50 p-6 md:p-8 rounded-[40px] shadow-inner flex flex-col justify-center gap-6">
+                {[
+                  { l: "Why Protocols?", d: "Rules governing communication. Without them, devices can't 'understand' the bits they receive.", icon: <Shield size={18} /> },
+                  { l: "Layered Necessity", d: "Enables globalization. A web developer in Pakistan doesn't need to know how fiber optic works in USA.", icon: <Layers size={18} /> }
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-4 p-4 bg-white rounded-2xl shadow-sm border border-gray-50">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#006400] flex items-center justify-center shrink-0">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h6 className="font-black text-[12px] text-gray-900 uppercase">{t(item.l, item.l)}</h6>
+                      <p className="text-[10px] text-gray-500 font-medium leading-relaxed">{t(item.d, item.d)}</p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            <LectureNote
+              title="Seamless Communication"
+              content="The goal of algorithms in networking is to provide seamless communication across heterogeneous hardware. Layering abstracts complexity, allowing for rapid innovation at each level independently."
+              icon={Zap}
+            />
+          </div>
+        </WeekCard>
+
+        {/* Week 2: OSI/TCP-IP & Core */}
+        <WeekCard
+          week={2}
+          title="OSI Model & Network Core"
+          titleUr="او ایس آئی ماڈل اور نیٹ ورک کور"
+          isExpanded={expandedWeek === 2}
+          onToggle={() => setExpandedWeek(expandedWeek === 2 ? 0 : 2)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-8 bg-blue-600 rounded-[40px] text-white space-y-4 shadow-xl shadow-blue-200">
+                <Share2 size={32} />
+                <h4 className="text-xl font-black uppercase">{t("Packet Switching", "پیکٹ سوئچنگ")}</h4>
+                <p className="text-[11px] text-blue-100/70 font-medium leading-relaxed">
+                  {t("Data is broken into small packets. Resources are used only when needed (Statistical Multiplexing). Efficient but can cause congestion.", "ڈیٹا کو چھوٹے پیکٹوں میں تقسیم کیا جاتا ہے۔ صرف ضرورت پڑنے پر وسائل استعمال کیے جاتے ہیں۔")}
+                </p>
+              </div>
+              <div className="p-8 bg-emerald-600 rounded-[40px] text-white space-y-4 shadow-xl shadow-emerald-200">
+                <RefreshCw size={32} />
+                <h4 className="text-xl font-black uppercase">{t("Circuit Switching", "سرکٹ سوئچنگ")}</h4>
+                <p className="text-[11px] text-emerald-100/70 font-medium leading-relaxed">
+                  {t("Dedicated end-to-end connection (like old phone lines). Resources are reserved. Guaranteed performance but wasteful if silent.", "وقف شدہ اینڈ ٹو اینڈ کنکشن (پرانے فون لائنوں کی طرح)۔ وسائل محفوظ ہیں۔")}
+                </p>
+              </div>
+              <div className="p-8 bg-gray-900 rounded-[40px] text-white space-y-6 shadow-xl">
+                <h4 className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{t("Performance Metrics", "کارکردگی کی پیمائش")}</h4>
+                <div className="space-y-4">
+                  {[
+                    { l: "Delay (Latency)", v: "End-to-end time" },
+                    { l: "Throughput", v: "Bits per second" },
+                    { l: "Packet Loss", v: "% of lost chunks" },
+                  ].map(m => (
+                    <div key={m.l} className="flex justify-between items-center border-b border-white/10 pb-2">
+                      <span className="text-[11px] font-black text-white">{t(m.l, m.l)}</span>
+                      <span className="text-[10px] text-gray-400 font-bold italic">{t(m.v, m.v)}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Networks Types: LAN, MAN, WAN, PAN */}
-        <div className="bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-2xl md:text-3xl font-black mb-6 md:mb-8 text-[#006400]">{t('Network Types (Coverage Area)', 'نیٹ ورک کی اقسام (کوریج ایریا)')}</h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="p-6 bg-purple-50 rounded-3xl border border-purple-100 hover:-translate-y-2 transition-transform shadow-sm">
-              <h4 className="font-black text-xl text-purple-900 mb-2">PAN <span className="text-[10px] bg-purple-200 text-purple-800 px-2 py-1 rounded-full ml-2">Personal</span></h4>
-              <p className="text-xs text-purple-800 leading-relaxed font-medium">{t('Covers a very small area (1-10 meters). Used for connecting personal devices like smartphones to wireless headphones via Bluetooth.', 'بہت چھوٹے حصے کا احاطہ کرتا ہے جیسے بلوٹوتھ کی مدد سے موبائل فون اور ہیڈفونز کا رابطہ۔')}</p>
-            </div>
-            <div className="p-6 bg-emerald-50 rounded-3xl border border-emerald-100 hover:-translate-y-2 transition-transform shadow-sm">
-              <h4 className="font-black text-xl text-emerald-900 mb-2">LAN <span className="text-[10px] bg-emerald-200 text-emerald-800 px-2 py-1 rounded-full ml-2">Local</span></h4>
-              <p className="text-xs text-emerald-800 leading-relaxed font-medium">{t('Privately owned network linking devices in a single office, building, or campus. Can range from two PCs to thousands. Uses Ethernet/Wi-Fi.', 'ایک دفتر، عمارت، یا کیمپس میں ڈیوائسز کو جوڑنے والا پرائیویٹ نیٹ ورک۔')}</p>
-            </div>
-            <div className="p-6 bg-blue-50 rounded-3xl border border-blue-100 hover:-translate-y-2 transition-transform shadow-sm">
-              <h4 className="font-black text-xl text-blue-900 mb-2">MAN <span className="text-[10px] bg-blue-200 text-blue-800 px-2 py-1 rounded-full ml-2">Metropolitan</span></h4>
-              <p className="text-xs text-blue-800 leading-relaxed font-medium">{t('A network with a size between a LAN and a WAN, typically covering an entire city. Example: Cable TV networks.', 'ایسا نیٹ ورک جو LAN سے بڑا اور WAN سے چھوٹا ہو، جو عام طور پر ایک پورے شہر کا احاطہ کرتا ہے۔')}</p>
-            </div>
-            <div className="p-6 bg-orange-50 rounded-3xl border border-orange-100 hover:-translate-y-2 transition-transform shadow-sm">
-              <h4 className="font-black text-xl text-orange-900 mb-2">WAN <span className="text-[10px] bg-orange-200 text-orange-800 px-2 py-1 rounded-full ml-2">Wide</span></h4>
-              <p className="text-xs text-orange-800 leading-relaxed font-medium">{t('Spans a large geographical area, often a country or continent (or the globally connected Internet). Typically uses public transmission systems.', 'ایک بڑے جغرافیائی علاقے، ملک یا براعظم پر محیط نیٹ ورک۔')}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <div className="lg:col-span-2 space-y-4">
-              <div className="bg-emerald-50 p-6 rounded-3xl">
-                <h4 className="font-black text-emerald-900">LAN Example (Karachi Office)</h4>
-                <p className="text-xs text-emerald-800 mt-2 opacity-80">High speed gigabit links, extremely low packet delay, owned entirely by the company within a single physical building.</p>
+            <div className="bg-gray-50 p-6 md:p-12 rounded-[50px] border border-gray-100">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1.5 h-8 bg-blue-600 rounded-full" />
+                <h4 className="text-2xl font-black text-gray-900">{t("OSI vs TCP/IP", "او ایس آئی بمقابلہ ٹی سی پی آئی پی")}</h4>
               </div>
-              <div className="bg-orange-50 p-6 rounded-3xl">
-                <h4 className="font-black text-orange-900">WAN Example (Karachi to Gilgit)</h4>
-                <p className="text-xs text-orange-800 mt-2 opacity-80">~1500 km distance. High cost, lower bandwidth compared to LAN. Leased through third-party ISPs like PTCL using MPLS or VPN tunnels.</p>
-              </div>
-            </div>
-            <div className="lg:col-span-3 bg-gray-50 p-6 md:p-8 rounded-[32px] flex items-center justify-center shadow-inner">
-              <svg viewBox="0 0 400 150" className="w-full h-32 md:h-48 drop-shadow-lg">
-                <rect x="30" y="55" width="80" height="50" rx="10" fill="#10B981" />
-                <text x="70" y="80" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">LAN</text>
-                <text x="70" y="125" textAnchor="middle" fill="gray" fontSize="12" fontWeight="bold">Karachi HQ</text>
-
-                <path d="M 110 80 Q 200 10 290 80" fill="none" stroke="#F97316" strokeWidth="5" strokeDasharray="8 6" />
-                <path d="M 110 80 Q 200 150 290 80" fill="none" stroke="#F97316" strokeWidth="5" strokeDasharray="8 6" opacity="0.4" />
-
-                <circle cx="200" cy="45" r="25" fill="#FFFED4" stroke="#F97316" strokeWidth="3" />
-                <text x="200" y="50" textAnchor="middle" fill="#C2410C" fontSize="12" fontWeight="bold">ISP</text>
-
-                <rect x="290" y="55" width="80" height="50" rx="10" fill="#10B981" />
-                <text x="330" y="80" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">LAN</text>
-                <text x="330" y="125" textAnchor="middle" fill="gray" fontSize="12" fontWeight="bold">Gilgit Branch</text>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== CHAPTER 2: FULL OSI MODEL ==================== */}
-      <section className="px-4 md:px-6 space-y-8 md:space-y-16">
-        <h2 className="text-3xl md:text-5xl font-black text-center text-[#006400]">Chapter 2 – Network Models</h2>
-
-        <div className="max-w-5xl mx-auto">
-          <h3 className="text-2xl md:text-3xl font-black text-center mb-8 md:mb-12">OSI 7-Layer Model</h3>
-
-          <div className="space-y-4 md:space-y-6 mb-12">
-            {[
-              { no: "7", name: "Application Layer", color: "bg-purple-600", desc: "The user interface. Where network applications (like web browsers or email clients) access network services. Provides features like authentication and data formatting for user apps.", protocols: "HTTP, HTTPS, FTP, SMTP, DNS, SSH" },
-              { no: "6", name: "Presentation Layer", color: "bg-pink-600", desc: "The translator. Converts incoming and outgoing data from one presentation format to another (e.g., from clear text to encrypted ciphertext, or compressing a video file).", protocols: "SSL/TLS, JPEG, MPEG, ASCII" },
-              { no: "5", name: "Session Layer", color: "bg-rose-600", desc: "The dialogue controller. Establishes, manages, and terminates connections (sessions) between local and remote applications. Keeps different app streams separate.", protocols: "NetBIOS, PPTP, RPC" },
-              { no: "4", name: "Transport Layer", color: "bg-red-600", desc: "The traffic cop. Responsible for end-to-end communication, error recovery, and flow control. Breaks large data into smaller pieces called 'Segments'.", protocols: "TCP, UDP", devices: "Firewalls" },
-              { no: "3", name: "Network Layer", color: "bg-orange-600", desc: "The mailroom. Responsible for logical addressing (IP addresses) and routing. Determines the best path for data 'Packets' to travel across vastly different networks.", protocols: "IPv4, IPv6, ICMP, IPSec", devices: "Routers, Layer 3 Switches" },
-              { no: "2", name: "Data Link Layer", color: "bg-emerald-600", desc: "The bridge. Responsible for physical MAC addressing, error detection in the physical layer, and framing data. Packages data into 'Frames' for local delivery.", protocols: "Ethernet, Wi-Fi (802.11), MAC, ARP, VLANs", devices: "Switches, Bridges" },
-              { no: "1", name: "Physical Layer", color: "bg-blue-600", desc: "The cables. Converts digital data into physical signals (electrical volts, light pulses, or radio waves) to be transmitted over physical medium strictly as 'Bits' (0s and 1s).", protocols: "100Base-T, DSL, ISDN", devices: "Hubs, Cables, Repeaters, Modems" }
-            ].map((layer) => (
-              <div key={layer.no} className="flex flex-col md:flex-row bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow group">
-                <div className={`${layer.color} text-white flex flex-col justify-center items-center p-6 md:w-56 shrink-0 relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="text-5xl md:text-7xl font-black opacity-30 mb-2 relative z-10 transition-transform group-hover:scale-110">L{layer.no}</div>
-                  <h4 className="font-black text-center text-sm md:text-lg relative z-10 tracking-wide uppercase">{layer.name}</h4>
-                </div>
-                <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-4 md:space-y-0">
-                  <p className="text-xs md:text-sm text-gray-700 leading-relaxed font-medium">{t(layer.desc, layer.desc)}</p>
-                  <div className="flex flex-wrap gap-2 pt-4">
-                    <span className="px-3 py-1.5 bg-gray-50 text-gray-600 text-[10px] md:text-xs font-black rounded-lg border border-gray-200 uppercase tracking-widest">{t('Protocols', 'پروٹوکول')}: <span className="text-[#006400] ml-1">{layer.protocols}</span></span>
-                    {layer.devices && <span className="px-3 py-1.5 bg-gray-50 text-gray-600 text-[10px] md:text-xs font-black rounded-lg border border-gray-200 uppercase tracking-widest">{t('Hardware', 'ہارڈویئر')}: <span className="text-[#00A651] ml-1">{layer.devices}</span></span>}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <OSIQuiz />
-          <PacketFlowSimulation />
-        </div>
-      </section>
-
-      {/* ==================== IPv4 & ARP SECTION ==================== */}
-      <section className="px-4 md:px-6 space-y-8 md:space-y-16">
-        <h2 className="text-3xl md:text-5xl font-black text-center text-[#006400]">IPv4 Addressing & ARP</h2>
-
-        <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
-            <Layers size={24} className="md:w-8 md:h-8" /> {t('IPv4 Address Structure', 'IPv4 Address Structure')}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {[
-              { class: "Class A", net: 8, host: 24, color: "bg-blue-600" },
-              { class: "Class B", net: 16, host: 16, color: "bg-orange-600" },
-              { class: "Class C", net: 24, host: 8, color: "bg-emerald-600" }
-            ].map((item, i) => (
-              <div key={i} className="space-y-3 md:space-y-4">
-                <h4 className="font-black text-center text-sm md:text-lg">{item.class}</h4>
-                <div className="h-10 md:h-12 w-full flex rounded-lg md:rounded-xl overflow-hidden shadow-inner border border-gray-200">
-                  <div
-                    className={`${item.color} h-full flex items-center justify-center text-white text-[8px] md:text-[10px] font-bold`}
-                    style={{ width: `${(item.net / 32) * 100}%` }}
-                  >
-                    NET ({item.net})
-                  </div>
-                  <div
-                    className="bg-gray-100 h-full flex items-center justify-center text-gray-400 text-[8px] md:text-[10px] font-bold"
-                    style={{ width: `${(item.host / 32) * 100}%` }}
-                  >
-                    HOST ({item.host})
-                  </div>
-                </div>
-                <p className="text-[8px] md:text-[10px] text-center text-gray-500">32 Bits Total</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
-            <Hash size={24} className="md:w-8 md:h-8" /> {t('Classful IPv4 Addressing', 'Classful IPv4 Addressing')}
-          </h3>
-          <div className="overflow-x-auto -mx-6 px-6">
-            <table className="w-full text-[10px] md:text-sm border-collapse min-w-[500px]">
-              <thead className="bg-[#006400] text-white">
-                <tr>
-                  <th className="p-3 md:p-5 text-left">{t('Class', 'Class')}</th>
-                  <th className="p-3 md:p-5 text-left">{t('First Octet Range', 'First Octet Range')}</th>
-                  <th className="p-3 md:p-5 text-left">{t('Default Mask', 'Default Mask')}</th>
-                  <th className="p-3 md:p-5 text-left">{t('Typical Use', 'Typical Use')}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y border-x border-b border-gray-100">
-                <tr>
-                  <td className="p-3 md:p-5 font-black text-blue-600">A</td>
-                  <td className="p-3 md:p-5 font-mono">1 – 126</td>
-                  <td className="p-3 md:p-5 font-mono">255.0.0.0 (/8)</td>
-                  <td className="p-3 md:p-5">{t('Large Networks', 'Large Networks')}</td>
-                </tr>
-                <tr>
-                  <td className="p-3 md:p-5 font-black text-orange-600">B</td>
-                  <td className="p-3 md:p-5 font-mono">128 – 191</td>
-                  <td className="p-3 md:p-5 font-mono">255.255.0.0 (/16)</td>
-                  <td className="p-3 md:p-5">{t('Medium Networks', 'Medium Networks')}</td>
-                </tr>
-                <tr>
-                  <td className="p-3 md:p-5 font-black text-emerald-600">C</td>
-                  <td className="p-3 md:p-5 font-mono">192 – 223</td>
-                  <td className="p-3 md:p-5 font-mono">255.255.255.0 (/24)</td>
-                  <td className="p-3 md:p-5">{t('Small Networks', 'Small Networks')}</td>
-                </tr>
-                <tr className="bg-gray-50">
-                  <td className="p-3 md:p-5 font-black text-purple-600">D</td>
-                  <td className="p-3 md:p-5 font-mono">224 – 239</td>
-                  <td className="p-3 md:p-5 font-mono">N/A</td>
-                  <td className="p-3 md:p-5">{t('Multicast Groups', 'Multicast Groups')}</td>
-                </tr>
-                <tr className="bg-gray-50">
-                  <td className="p-3 md:p-5 font-black text-gray-600">E</td>
-                  <td className="p-3 md:p-5 font-mono">240 – 255</td>
-                  <td className="p-3 md:p-5 font-mono">N/A</td>
-                  <td className="p-3 md:p-5">{t('Experimental / Reserved', 'Experimental / Reserved')}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4 md:mt-6 text-[10px] md:text-sm text-gray-500 italic">
-            * {t('Note: 127.0.0.0 is reserved for loopback testing.', 'Note: 127.0.0.0 is reserved for loopback testing.')}
-          </p>
-        </div>
-
-        <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <h3 className="text-xl md:text-3xl font-black mb-6 md:mb-10 flex items-center gap-2 md:gap-3 text-[#006400]">
-            <Shield size={24} className="md:w-8 md:h-8" /> {t('Private IP Address Ranges', 'Private IP Address Ranges')}
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
-            {[
-              { range: "10.0.0.0/8", use: "Large Enterprise", color: "bg-blue-50 text-blue-900" },
-              { range: "172.16.0.0/12", use: "Medium Networks", color: "bg-orange-50 text-orange-900" },
-              { range: "192.168.0.0/16", use: "Home / Small Office", color: "bg-emerald-50 text-emerald-900" }
-            ].map((item, i) => (
-              <div key={i} className={`p-6 md:p-8 rounded-[24px] md:rounded-[32px] shadow-sm border border-gray-100 ${item.color}`}>
-                <p className="text-xl md:text-2xl font-mono font-black mb-1 md:mb-2">{item.range}</p>
-                <p className="text-[8px] md:text-xs font-bold uppercase tracking-wider opacity-70">{t(item.use, item.use)}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="space-y-6 md:space-y-8">
-            <div className="p-6 md:p-8 bg-gray-50 rounded-[24px] md:rounded-[32px] border-l-4 md:border-l-8 border-[#006400]">
-              <h4 className="font-black text-lg md:text-xl mb-3 md:mb-4 flex items-center gap-2">
-                <Info size={18} className="text-[#006400]" /> {t('Purpose of Private IPs', 'Purpose of Private IPs')}
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                <div className="space-y-3 md:space-y-4">
-                  <p className="text-xs md:text-sm leading-relaxed text-gray-700">
-                    {t('Private IP addresses are used within local networks (LANs) and are not routable on the public internet. They allow multiple devices to share a single public IP address using Network Address Translation (NAT).', 'Private IP addresses are used within local networks (LANs) and are not routable on the public internet. They allow multiple devices to share a single public IP address using Network Address Translation (NAT).')}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium">
+                    {t("OSI is a THEORETICAL 7-layer model (ISO standard). TCP/IP is the PRACTICAL 4-layer (or 5-layer) suite used by the actual global internet today.", "او ایس آئی ایک نظریاتی 7-لیئر ماڈل ہے۔ ٹی سی پی / آئی پی وہ عملی سوٹ ہے جسے آج انٹرنیٹ استعمال کرتا ہے۔")}
                   </p>
-                  <ul className="text-[10px] md:text-xs space-y-1.5 md:space-y-2 text-gray-600">
-                    <li className="flex items-center gap-2"><CheckCircle2 size={12} className="text-[#00A651]" /> {t('Conserves Public IPv4 addresses', 'Conserves Public IPv4 addresses')}</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 size={12} className="text-[#00A651]" /> {t('Enhances Security (Internal IPs hidden)', 'Enhances Security (Internal IPs hidden)')}</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 size={12} className="text-[#00A651]" /> {t('Cost-effective for large organizations', 'Cost-effective for large organizations')}</li>
-                  </ul>
+                  <div className="flex gap-4">
+                    <div className="flex-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+                      <span className="text-3xl font-black text-blue-600">7</span>
+                      <p className="text-[10px] font-black uppercase text-gray-400 mt-1">OSI Layers</p>
+                    </div>
+                    <div className="flex-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+                      <span className="text-3xl font-black text-emerald-600">4</span>
+                      <p className="text-[10px] font-black uppercase text-gray-400 mt-1">TCP/IP Layers</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-white p-5 md:p-6 rounded-2xl border border-gray-100 flex flex-col justify-center">
-                  <p className="text-right font-urdu text-base md:text-lg leading-loose text-[#006400]">
-                    پرائیویٹ آئی پی ایڈریسز مقامی نیٹ ورکس (LANs) میں استعمال ہوتے ہیں اور عوامی انٹرنیٹ پر براہ راست نہیں چل سکتے۔ یہ نیٹ ورک ایڈریس ٹرانسلیشن (NAT) کے ذریعے ایک ہی پبلک آئی پی کو کئی ڈیوائسز کے درمیان شیئر کرنے کی اجازت دیتے ہیں۔
-                  </p>
+                <div className="flex flex-col gap-2 relative">
+                  {['Application', 'Transport', 'Network', 'Data Link', 'Physical'].map((l, i) => (
+                    <div key={l} className="p-3 bg-white border border-gray-200 rounded-xl text-center font-black text-[10px] uppercase tracking-widest text-gray-500 shadow-sm relative overflow-hidden group hover:border-blue-500 transition-colors">
+                      <div className="absolute inset-y-0 left-0 w-1 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {t(l, l)}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </WeekCard>
 
-        <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <div>
-              <h3 className="text-xl md:text-3xl font-black text-[#006400] flex items-center gap-3">
-                <Layers size={28} /> {t('Subnetting & CIDR Explained', 'سب نیٹ اور CIDR کی وضاحت')}
+        {/* Week 3: Hierarchy & IoT */}
+        <WeekCard
+          week={3}
+          title="Topologies & Future IoT"
+          titleUr="ٹاپولوجی اور بٹی ہوئی مستقبل"
+          isExpanded={expandedWeek === 3}
+          onToggle={() => setExpandedWeek(expandedWeek === 3 ? 0 : 3)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { t: "PAN", d: "Personal Area", c: "bg-purple-500" },
+                { t: "LAN", d: "Local (Bldg)", c: "bg-blue-500" },
+                { t: "MAN", d: "City Wide", c: "bg-emerald-500" },
+                { t: "WAN", d: "Global/Country", c: "bg-orange-500" },
+              ].map(type => (
+                <div key={type.t} className={`p-6 rounded-[32px] text-white shadow-lg ${type.c}`}>
+                  <h5 className="font-black text-2xl mb-1">{type.t}</h5>
+                  <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest">{t(type.d, type.d)}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-gray-900 rounded-[40px] p-8 text-white space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-emerald-500 rounded-xl"><Wifi size={24} /></div>
+                  <h4 className="text-xl font-black tracking-tight italic">{t("Low Power WAN (LPWAN)", "ایل پی ڈبلیو اے این")}</h4>
+                </div>
+                <p className="text-xs text-gray-400 leading-relaxed font-medium">
+                  {t("Designed for IoT (Internet of Things). Allows long-range communication at extremely low bit rates with years of battery life. Used for smart cities, agriculture, and telemetry.", "آئی او ٹی کے لیے ڈیزائن کیا گیا۔ یہ بہت کم بٹ ریٹ پر طویل فاصلے تک بات چیت کی اجازت دیتا ہے۔")}
+                </p>
+                <div className="space-y-3">
+                  {['LoRaWAN', 'Sigfox', 'NB-IoT'].map(t => (
+                    <div key={t} className="flex justify-between items-center py-2 border-b border-white/5">
+                      <span className="text-[10px] font-black uppercase text-emerald-400">{t}</span>
+                      <span className="text-[10px] text-gray-600 font-bold italic">LPWAN Standard</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border border-gray-100 rounded-[40px] p-8 bg-white space-y-6">
+                <h4 className="text-lg font-black text-gray-900 uppercase tracking-tight flex items-center gap-2">
+                  <Layers size={18} className="text-[#00A651]" />
+                  {t("Transmission Media", "ٹرانسمیشن میڈیا")}
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-5 bg-gray-50 rounded-3xl border border-gray-100 space-y-2">
+                    <h6 className="font-black text-[11px] text-blue-900 uppercase italic underline underline-offset-4 decoration-blue-200">{t("Guided (Wired)", "کیبل کے ساتھ")}</h6>
+                    <p className="text-[9px] text-gray-500 font-medium">UTP, Coaxial, Fiber Optic (Light signals).</p>
+                  </div>
+                  <div className="p-5 bg-gray-50 rounded-3xl border border-gray-100 space-y-2">
+                    <h6 className="font-black text-[11px] text-emerald-900 uppercase italic underline underline-offset-4 decoration-emerald-200">{t("Unguided (Wireless)", "وائرلیس")}</h6>
+                    <p className="text-[9px] text-gray-500 font-medium">Free Space, Microwaves, Radio Waves.</p>
+                  </div>
+                </div>
+                <LectureNote
+                  title="Fiber Optic Advantage"
+                  content="Uses Total Internal Reflection. Immune to EMI, massive bandwidth, and extremely low attenuation compared to copper."
+                  icon={Zap}
+                />
+              </div>
+            </div>
+          </div>
+        </WeekCard>
+
+        {/* Week 4: App Layer & IPv4 */}
+        <WeekCard
+          week={4}
+          title="App Layer & Addressing"
+          titleUr="ایپ لیئر اور ایڈریسنگ"
+          isExpanded={expandedWeek === 4}
+          onToggle={() => setExpandedWeek(expandedWeek === 4 ? 0 : 4)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-lg ring-4 ring-indigo-50"><Globe size={24} /></div>
+                  <h4 className="text-2xl font-black text-gray-900 leading-none tracking-tight">{t("The Service Interface", "سروس انٹرفیس")}</h4>
+                </div>
+                <p className="text-sm text-gray-600 leading-relaxed font-medium">
+                  {t("The Application layer provides the protocols necessary for user interactions. It handles name resolution (DNS), file transfer (FTP), and the web (HTTP).", "ایپلیکیشن لیئر صارف کے تعاملات کے لیے ضروری پروٹوکول فراہم کرتی ہے۔")}
+                </p>
+                <div className="bg-indigo-50/50 p-6 rounded-3xl border border-indigo-100 space-y-4">
+                  <h5 className="font-black text-[10px] text-indigo-900 uppercase tracking-widest">{t("Key Protocols to Master", "اہم پروٹوکول")}</h5>
+                  <div className="grid grid-cols-2 gap-3">
+                    {['HTTP (Port 80)', 'FTP (Port 21)', 'SMTP (Port 25)', 'DNS (Port 53)'].map(p => (
+                      <div key={p} className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-xs border border-indigo-50">
+                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                        <span className="text-[10px] font-black text-gray-700">{p}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-8 bg-gray-900 rounded-[48px] text-white relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity"><Hash size={120} /></div>
+                <h4 className="text-xl font-black text-orange-400 mb-6 uppercase tracking-widest">{t("IPv4 Logical Addressing", "لاجیکل ایڈریسنگ")}</h4>
+                <div className="space-y-6 relative z-10">
+                  <p className="text-xs text-gray-400 italic">
+                    {t("Chapter 19 & 20: Behrouz A. Forouzan Foundation.", "بہروز فاروزان کی فاؤنڈیشن۔")}
+                  </p>
+                  <div className="bg-white/5 p-6 rounded-3xl border border-white/10 space-y-4">
+                    <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-tighter">
+                      <span>Dotted Decimal</span>
+                      <span>32-Bit Binary</span>
+                    </div>
+                    <div className="flex items-center justify-between font-mono bg-black/40 p-3 rounded-xl border border-white/5">
+                      <span className="text-emerald-400">192.168.1.1</span>
+                      <ArrowRight size={14} className="text-gray-700" />
+                      <span className="text-emerald-800 text-[8px]">11000000.10101000...</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="p-3 bg-blue-500/10 rounded-xl text-center border border-blue-500/20">
+                        <span className="block text-[8px] uppercase font-black text-blue-400">Class A</span>
+                        <span className="text-[10px] font-black text-white italic">1-126</span>
+                      </div>
+                      <div className="p-3 bg-emerald-500/10 rounded-xl text-center border border-emerald-500/20">
+                        <span className="block text-[8px] uppercase font-black text-emerald-400">Class B</span>
+                        <span className="text-[10px] font-black text-white italic">128-191</span>
+                      </div>
+                      <div className="p-3 bg-orange-500/10 rounded-xl text-center border border-orange-500/20">
+                        <span className="block text-[8px] uppercase font-black text-orange-400">Class C</span>
+                        <span className="text-[10px] font-black text-white italic">192-223</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <LectureNote
+              title="Socket Programming"
+              content="A socket is the combination of an IP Address and a Port Number. It represents a single end-point of a two-way communication link between two programs running on the network."
+              icon={Terminal}
+            />
+          </div>
+        </WeekCard>
+
+        {/* Week 5: Transport Layer */}
+        <WeekCard
+          week={5}
+          title="Transport Layer Protocols"
+          titleUr="ٹرانسپورٹ لیئر پروٹوکول"
+          isExpanded={expandedWeek === 5}
+          onToggle={() => setExpandedWeek(expandedWeek === 5 ? 0 : 5)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="p-8 bg-linear-to-br from-blue-600 to-indigo-800 rounded-[48px] text-white space-y-6 shadow-2xl shadow-blue-500/20 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform"><Shield size={100} /></div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white/20 rounded-xl"><Zap size={24} /></div>
+                  <h4 className="text-2xl font-black uppercase tracking-tighter italic">TCP (The Heavyweight)</h4>
+                </div>
+                <p className="text-xs text-blue-100 font-medium leading-relaxed mt-4">
+                  {t("Transmission Control Protocol. Connection-oriented, meaning it performs a 'Handshake' before sending data. Guarantees every single bit arrives in order.", "کنکشن پر مبنی۔ یہ ڈیٹا بھیجنے سے پہلے ہینڈ شیک کرتا ہے۔")}
+                </p>
+                <div className="space-y-2 pt-4">
+                  {['Reliable Delivery', 'Flow Control', 'Congestion Control', 'Error Detection'].map(feat => (
+                    <div key={feat} className="flex gap-3 items-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                      <span className="text-[10px] font-black uppercase text-blue-200">{t(feat, feat)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-8 bg-linear-to-br from-orange-500 to-red-700 rounded-[48px] text-white space-y-6 shadow-2xl shadow-orange-500/20 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform"><Zap size={100} /></div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white/20 rounded-xl"><RefreshCw size={24} /></div>
+                  <h4 className="text-2xl font-black uppercase tracking-tighter italic">UDP (The Lightweight)</h4>
+                </div>
+                <p className="text-xs text-orange-100 font-medium leading-relaxed mt-4">
+                  {t("User Datagram Protocol. Connectionless 'Fire and Forget'. No setup required. Extremely fast but permits packet loss (Unreliable).", "بغیر کنکشن کے 'فائر اینڈ فارگیٹ'۔ بہت تیز لیکن غیر یقینی۔")}
+                </p>
+                <div className="space-y-2 pt-4">
+                  {['Video Streaming', 'VoIP / Gaming', 'Low Overhead', 'Fast Response'].map(feat => (
+                    <div key={feat} className="flex gap-3 items-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                      <span className="text-[10px] font-black uppercase text-orange-200">{t(feat, feat)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-emerald-900 rounded-[48px] p-8 md:p-12 text-white flex flex-col md:flex-row gap-8 items-center">
+              <div className="w-20 h-20 bg-white/10 rounded-[32px] flex items-center justify-center border border-white/10 shadow-inner group cursor-help relative">
+                <Box size={32} className="text-emerald-400 group-hover:scale-110 transition-transform" />
+              </div>
+              <div className="space-y-4 max-w-xl">
+                <h4 className="text-2xl font-black italic">{t("Multiplexing & Demultiplexing", "ملٹی پلیکسنگ اور ڈی ملٹی پلیکسنگ")}</h4>
+                <p className="text-[11px] text-emerald-100/60 leading-relaxed font-medium">
+                  {t("The core job of the transport layer. Multiplexing gathers data from multiple sockets into one segment. Demultiplexing delivers the received segment to the correct socket based on Port Numbers.", "ٹرانسپورٹ لیئر کا بنیادی کام۔ یہ پورٹ نمبروں کی بنیاد پر ڈیٹا کو صحیح ساکٹ تک پہنچاتا ہے۔")}
+                </p>
+              </div>
+            </div>
+          </div>
+        </WeekCard>
+
+        {/* Week 6: Network Layer & Routing */}
+        <WeekCard
+          week={6}
+          title="Network Layer & Routing"
+          titleUr="نیٹ ورک لیئر اور روٹنگ"
+          isExpanded={expandedWeek === 6}
+          onToggle={() => setExpandedWeek(expandedWeek === 6 ? 0 : 6)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white p-8 rounded-[48px] border-2 border-emerald-100 shadow-xl space-y-6">
+                <div className="flex justify-between items-start">
+                  <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl"><Compass size={32} /></div>
+                  <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-black rounded-lg uppercase tracking-widest">{t("Data Plane", "ڈیٹا پلین")}</span>
+                </div>
+                <h4 className="text-2xl font-black text-gray-900 leading-tight">{t("Forwarding vs Routing", "فارورڈنگ بمقابلہ روٹنگ")}</h4>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                    <p className="text-[11px] text-gray-700 font-bold mb-1 uppercase tracking-tighter">{t("Forwarding (Local)", "فارورڈنگ")}</p>
+                    <p className="text-[10px] text-gray-500 leading-relaxed font-medium">{t("Moving a packet from a router's input Link to the appropriate output Link.", "پیکٹ کو راؤٹر کے ان پٹ لنک سے مناسب آؤٹ پٹ لنک پر منتقل کرنا۔")}</p>
+                  </div>
+                  <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <p className="text-[11px] text-emerald-900 font-bold mb-1 uppercase tracking-tighter">{t("Routing (Global)", "روٹنگ")}</p>
+                    <p className="text-[10px] text-emerald-700 leading-relaxed font-medium">{t("Determining the overall path from Source to Destination across the entire network.", "پورے نیٹ ورک میں سورس سے ڈیسٹینیشن تک مجموعی راستے کا تعین کرنا۔")}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="p-8 bg-gray-900 rounded-[48px] text-white shadow-2xl shadow-emerald-900/40">
+                  <h4 className="text-lg font-black text-emerald-400 mb-4 uppercase tracking-[0.2em]">{t("Routing Protocols", "روٹنگ پروٹوکول")}</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { n: "RIP", t: "Distance Vector", d: "Uses hop count (Max 15)." },
+                      { n: "OSPF", t: "Link State", d: "Uses Dijkstra's algorithm." },
+                      { n: "BGP", t: "Path Vector", d: "Inter-AS routing (The Glue)." },
+                      { n: "EIGRP", t: "Hybrid", d: "Cisco proprietary (fast)." },
+                    ].map(protocol => (
+                      <div key={protocol.n} className="p-4 bg-white/5 rounded-2xl border border-white/10 hover:border-emerald-500 transition-colors group">
+                        <span className="block text-sm font-black text-white group-hover:text-emerald-400">{protocol.n}</span>
+                        <span className="block text-[8px] uppercase font-bold text-gray-500 mt-0.5">{t(protocol.t, protocol.t)}</span>
+                        <p className="text-[8px] text-gray-600 mt-2 font-medium leading-tight">{t(protocol.d, protocol.d)}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <LectureNote
+                  title="IP Fragmentation"
+                  content="Routers may break large packets into smaller fragments if the next link's MTU (Maximum Transmission Unit) is too small. Reassembly only happens at the destination."
+                  icon={RefreshCw}
+                />
+              </div>
+            </div>
+
+            <PacketFlowSimulation />
+          </div>
+        </WeekCard>
+
+        {/* Week 7: Wireless & Ad-hoc */}
+        <WeekCard
+          week={7}
+          title="Wireless & Ad-hoc Networks"
+          titleUr="وائرلیس اور ایڈہاک نیٹ ورکس"
+          isExpanded={expandedWeek === 7}
+          onToggle={() => setExpandedWeek(expandedWeek === 7 ? 0 : 7)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-linear-to-br from-purple-600 to-indigo-900 p-8 md:p-12 rounded-[60px] text-white space-y-8 shadow-2xl relative overflow-hidden group">
+                <div className="absolute -top-10 -right-10 p-12 opacity-5 scale-150 rotate-12 group-hover:rotate-0 transition-transform duration-1000"><Wifi size={200} /></div>
+                <div className="inline-flex px-4 py-1 bg-white/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">{t("Untethered Nodes", "آزادی")}</div>
+                <h4 className="text-3xl md:text-5xl font-black italic tracking-tighter leading-none">{t("Ad-hoc Networking", "ایڈہاک نیٹ ورکنگ")}</h4>
+                <p className="text-[11px] md:text-sm text-purple-100 font-medium leading-relaxed max-w-sm">
+                  {t("Networks formed on-the-fly without any pre-existing infrastructure or central access points. Each node acts as a router.", "ایڈہاک نیٹ ورکس بغیر کسی پہلے سے موجود انفراسٹرکچر کے بنائے جاتے ہیں۔")}
+                </p>
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <div className="p-4 bg-white/10 rounded-3xl border border-white/5 backdrop-blur-sm">
+                    <h6 className="font-black text-[12px] uppercase mb-1">MANET</h6>
+                    <p className="text-[9px] text-purple-200">Mobile Ad-hoc Networks</p>
+                  </div>
+                  <div className="p-4 bg-white/10 rounded-3xl border border-white/5 backdrop-blur-sm">
+                    <h6 className="font-black text-[12px] uppercase mb-1">WSN</h6>
+                    <p className="text-[9px] text-purple-200">Wireless Sensor Networks</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  { l: "Bluetooth (802.15)", d: "Low range, high energy efficiency for peripherals.", i: <Headphones size={24} /> },
+                  { l: "Zigbee", d: "Used in home automation and industrial sensors.", i: <Zap size={24} /> },
+                  { l: "Satellite IP", d: "High latency but global coverage for remote areas.", i: <Globe size={24} /> },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-6 p-6 md:p-8 bg-white rounded-[40px] border border-gray-100 hover:border-indigo-100 transition-all group shadow-sm">
+                    <div className="w-14 h-14 shrink-0 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      {item.i}
+                    </div>
+                    <div className="space-y-1">
+                      <h5 className="font-black text-gray-900 uppercase text-sm tracking-tight">{t(item.l, item.l)}</h5>
+                      <p className="text-[11px] text-gray-500 font-medium leading-relaxed">{t(item.d, item.d)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <WirelessSection />
+          </div>
+        </WeekCard>
+
+        {/* Week 8: Midterm */}
+        <WeekCard
+          week={8}
+          title="Midterm Assessment"
+          titleUr="مڈ ٹرم اسسمنٹ"
+          isExpanded={expandedWeek === 8}
+          onToggle={() => setExpandedWeek(expandedWeek === 8 ? 0 : 8)}
+        >
+          <div className="p-8 md:p-16 bg-linear-to-br from-emerald-600 to-[#006400] rounded-[60px] text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-12 opacity-10"><Award size={200} /></div>
+            <div className="relative z-10 max-w-3xl">
+              <span className="px-4 py-1.5 bg-white/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-8 inline-block">{t("Checkpoint Alpha", "چیک پوائنٹ الفا")}</span>
+              <h4 className="text-4xl md:text-6xl font-black mb-8 leading-none tracking-tighter">{t("The Midterm Review", "مڈ ٹرم جائزہ")}</h4>
+              <p className="text-lg md:text-xl text-emerald-100/80 font-medium leading-relaxed mb-12">
+                {t("Consolidating concepts from Physical layer up to the Network layer. Prepare for deep-dive questions on IP addressing and OSI functions.", "فزیکل لیئر سے نیٹ ورک لیئر تک کے تصورات کو مستحکم کرنا۔")}
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 bg-white/10 rounded-[32px] border border-white/20 backdrop-blur-md space-y-4">
+                  <h5 className="font-black uppercase text-sm tracking-widest text-[#00A651]">{t("High-Yield Topics", "اہم عنوانات")}</h5>
+                  <ul className="space-y-3">
+                    {['IPv4 Addressing & Subnetting', 'OSI vs TCP/IP Layers', 'Circuit vs Packet Switching', 'Topologies: Mesh & Star'].map(topic => (
+                      <li key={topic} className="flex gap-3 items-center text-[11px] font-bold text-emerald-50">
+                        <CheckCircle2 size={16} className="text-[#00A651]" />
+                        {t(topic, topic)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="p-6 bg-black/20 rounded-[32px] border border-white/5 space-y-4">
+                  <h5 className="font-black uppercase text-sm tracking-widest text-orange-400">{t("Exam Strategy", "امتحانی حکمت عملی")}</h5>
+                  <p className="text-[11px] text-gray-400 font-medium leading-relaxed">
+                    {t("Conceptual understanding is key. Don't just memorize layers; understand EXCATLY how a bit becomes an application response.", "تصوراتی تفہیم کلید ہے۔ صرف تہوں کو حفظ نہ کریں؛ سمجھیں کہ بٹ کیسے ایپلیکیشن رسپانس بنتا ہے۔")}
+                  </p>
+                  <button className="w-full py-4 bg-white text-[#006400] rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
+                    {t("Download Study Guide", "اسٹڈی گائیڈ ڈاؤن لوڈ کریں")}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </WeekCard>
+
+        {/* Week 9: Link Layer & Virtualization */}
+        <WeekCard
+          week={9}
+          title="Data Link & Virtualization"
+          titleUr="ڈیٹا لنک اور ورچوئلائزیشن"
+          isExpanded={expandedWeek === 9}
+          onToggle={() => setExpandedWeek(expandedWeek === 1 ? 0 : 9)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-gray-50 p-8 rounded-[48px] border border-gray-100 flex flex-col justify-between">
+                <div className="space-y-6">
+                  <h4 className="text-2xl font-black text-gray-900 tracking-tight">{t("The Data Link Sub-layers", "ڈیٹا لنک سب تہیں")}</h4>
+                  <div className="space-y-4">
+                    <div className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><Link size={40} /></div>
+                      <h6 className="font-black text-blue-600 uppercase text-[12px]">{t("LLC (Logical Link Control)", "ایل ایل سی")}</h6>
+                      <p className="text-[10px] text-gray-500 font-medium mt-1 leading-relaxed">{t("Handles multi-protocol support and flow control. The upper sub-layer.", "ملٹی پروٹوکول سپورٹ اور فلو کنٹرول کو ہینڈل کرتا ہے۔")}</p>
+                    </div>
+                    <div className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><Cpu size={40} /></div>
+                      <h6 className="font-black text-emerald-600 uppercase text-[12px]">{t("MAC (Media Access Control)", "میک")}</h6>
+                      <p className="text-[10px] text-gray-500 font-medium mt-1 leading-relaxed">{t("Handles physical addressing (MAC addresses) and channel access. The lower sub-layer.", "فزیکل ایڈریسنگ اور چینل تک رسائی کو ہینڈل کرتا ہے۔")}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-8">
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t("Protocol Data Unit (PDU)", "پی ڈی یو")}</span>
+                  <div className="mt-2 text-3xl font-black text-[#006400] italic">"FRAME"</div>
+                </div>
+              </div>
+
+              <div className="bg-gray-900 rounded-[48px] p-8 md:p-12 text-white space-y-6 shadow-2xl">
+                <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center border border-blue-500/20">
+                  <Box size={32} className="text-blue-400" />
+                </div>
+                <h4 className="text-2xl font-black uppercase tracking-tighter">{t("Network Virtualization", "نیٹ ورک ورچوئلائزیشن")}</h4>
+                <p className="text-sm text-gray-400 leading-relaxed font-medium">
+                  {t("The ability to run multiple logical networks on a single physical infrastructure. Key to modern Data Centers and Cloud Computing.", "ایک ہی فزیکل انفراسٹرکچر پر متعدد منطقی نیٹ ورکس چلانے کی صلاحیت۔")}
+                </p>
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <span className="block text-xs font-black text-[#00A651]">VLANs</span>
+                    <p className="text-[9px] text-gray-600 mt-1 uppercase">Virtual LANs</p>
+                  </div>
+                  <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <span className="block text-xs font-black text-blue-500">VPNs</span>
+                    <p className="text-[9px] text-gray-600 mt-1 uppercase">Virtual Private Networks</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <OSIQuiz />
+          </div>
+        </WeekCard>
+
+        {/* Week 10: ALOHA & CSMA */}
+        <WeekCard
+          week={10}
+          title="Multiple Access Protocols"
+          titleUr="ملٹیپل رسائی پروٹوکول"
+          isExpanded={expandedWeek === 10}
+          onToggle={() => setExpandedWeek(expandedWeek === 10 ? 0 : 10)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { n: "ALOHA", t: "Pure & Slotted", d: "First random access protocol. In Slotted ALOHA, time is divided into discrete slots to reduce collisions.", c: "bg-blue-600" },
+                { n: "CSMA/CD", t: "Collision Detection", d: "Used in Ethernet. 'Listen before speak, stop if someone else starts'.", c: "bg-emerald-600" },
+                { n: "CSMA/CA", t: "Collision Avoidance", d: "Used in Wi-Fi (802.11). Uses 'Request to Send' (RTS) and 'Clear to Send' (CTS) to avoid collisions.", c: "bg-orange-600" },
+              ].map(proto => (
+                <div key={proto.n} className={`${proto.c} p-8 rounded-[48px] text-white space-y-4 shadow-xl shadow-opacity-20`}>
+                  <h4 className="text-2xl font-black italic">{proto.n}</h4>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/60 italic">{t(proto.t, proto.t)}</p>
+                  <p className="text-[11px] text-white/80 font-medium leading-relaxed">{t(proto.d, proto.d)}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-gray-50 rounded-[60px] p-8 md:p-16 border border-gray-100 flex flex-col md:flex-row gap-12 items-center">
+              <div className="space-y-6 flex-1">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-10 bg-orange-400 rounded-full" />
+                  <h4 className="text-3xl font-black text-gray-900">{t("The Hidden Station Problem", "پوشیدہ اسٹیشن کا مسئلہ")}</h4>
+                </div>
+                <p className="text-sm text-gray-500 leading-relaxed font-medium">
+                  {t("In wireless networks, node A can hear B, and node C can hear B, but A and C cannot hear each other. If both send to B, collisions occur. CSMA/CA solves this using the virtual carrier sensing (RTS/CTS).", "وائرلیس نیٹ ورکس میں، نوڈ اے اور سی ایک دوسرے کو نہیں سن سکتے۔ اگر دونوں بی کو بھیجیں تو ٹکراؤ ہوتا ہے۔")}
+                </p>
+              </div>
+              <div className="w-full md:w-96 p-8 bg-white rounded-[40px] shadow-2xl shadow-gray-200/50 border border-gray-100">
+                <div className="flex justify-between items-center opacity-40 grayscale group hover:opacity-100 hover:grayscale-0 transition-all duration-700">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center font-black">A</div>
+                  <div className="flex-1 h-0.5 border-t-2 border-dashed border-gray-300" />
+                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center font-black">B</div>
+                  <div className="flex-1 h-0.5 border-t-2 border-dashed border-gray-300" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center font-black">C</div>
+                </div>
+                <p className="text-[10px] text-center text-gray-400 font-bold uppercase mt-8">{t("Node B is the Intermediary", "نوڈ بی درمیانی ہے")}</p>
+              </div>
+            </div>
+          </div>
+        </WeekCard>
+        {/* Week 11: ARP & RARP */}
+        <WeekCard
+          week={11}
+          title="ARP & RARP Translation"
+          titleUr="اے آر پی اور آر اے آر پی ترجمہ"
+          isExpanded={expandedWeek === 11}
+          onToggle={() => setExpandedWeek(expandedWeek === 11 ? 0 : 11)}
+        >
+          <div className="space-y-12">
+            <div className="mb-8 md:mb-10 text-center md:text-left">
+              <h3 className="text-xl md:text-3xl font-black mb-4 flex justify-center md:justify-start items-center gap-2 md:gap-3 text-[#006400]">
+                <Search size={28} className="md:w-10 md:h-10 text-orange-500" /> {t('ARP Protocol: The Missing Link', 'ARP پروٹوکول: گمشدہ لنک')}
               </h3>
-              <p className="text-sm text-gray-500 mt-2 font-medium">{t('Dividing a large network into smaller, efficient, and secure sub-networks.', 'ایک بڑے نیٹ ورک کو چھوٹے، موثر، اور محفوظ حصوں میں تقسیم کرنا۔')}</p>
-            </div>
-            <div className="bg-emerald-100 text-emerald-800 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Classless Inter-Domain Routing</div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100 shadow-sm">
-              <h4 className="font-black text-[#006400] text-lg mb-2">1. The Problem</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">A Class B network gives 65,534 hosts. If a company only has 500 computers, placing all 65,000 IPs in one broadcast domain wastes addresses and causes massive congestion.</p>
-            </div>
-            <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm shadow-emerald-100/50">
-              <h4 className="font-black text-emerald-800 text-lg mb-2">2. The Solution</h4>
-              <p className="text-xs text-emerald-700 leading-relaxed">Borrow bits from the Host portion to create a smaller "Subnet" portion. This splits the massive network into multiple bite-sized, isolated networks.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100 shadow-sm">
-              <h4 className="font-black text-[#006400] text-lg mb-2">3. The Result</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">Reduced broadcast traffic, improved security (can place firewalls between subnets), and no wasted IP space.</p>
-            </div>
-          </div>
-
-          <h4 className="font-black text-gray-800 text-lg mb-4">Practical ISP Subnetting Allocation (Base: 190.100.0.0/16)</h4>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-[24px] hover:border-[#006400] transition-colors">
-              <div className="w-12 h-12 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center font-black text-xl shrink-0">1</div>
-              <div>
-                <h5 className="font-black text-sm md:text-base text-gray-800">Group 1: Needs 64 addresses per customer</h5>
-                <p className="text-xs text-gray-500 mt-1">If 256 addresses are required total per subnet, we use a <code className="bg-gray-100 px-1 rounded text-[#00A651] font-bold">/24</code> mask (leaves 8 host bits = 2^8 = 256).</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-[24px] hover:border-[#006400] transition-colors">
-              <div className="w-12 h-12 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center font-black text-xl shrink-0">2</div>
-              <div>
-                <h5 className="font-black text-sm md:text-base text-gray-800">Group 2: Needs 128 smaller subnets</h5>
-                <p className="text-xs text-gray-500 mt-1">If exactly 128 addresses are required per subnet, we borrow 1 more bit! Mask becomes <code className="bg-gray-100 px-1 rounded text-[#00A651] font-bold">/25</code> (leaves 7 host bits = 2^7 = 128).</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-[24px] hover:border-[#006400] transition-colors">
-              <div className="w-12 h-12 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center font-black text-xl shrink-0">3</div>
-              <div>
-                <h5 className="font-black text-sm md:text-base text-gray-800">Group 3: Needs micro networks</h5>
-                <p className="text-xs text-gray-500 mt-1">Require 64 addresses? Borrow 2 bits! Mask goes to <code className="bg-gray-100 px-1 rounded text-[#00A651] font-bold">/26</code> (leaves 6 host bits = 2^6 = 64).</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-5xl mx-auto bg-white p-6 md:p-12 rounded-[32px] md:rounded-[40px] shadow-2xl">
-          <div className="mb-8 md:mb-10 text-center md:text-left">
-            <h3 className="text-xl md:text-3xl font-black mb-4 flex justify-center md:justify-start items-center gap-2 md:gap-3 text-[#006400]">
-              <Search size={28} className="md:w-10 md:h-10 text-orange-500" /> {t('ARP Protocol: The Missing Link', 'ARP پروٹوکول: گمشدہ لنک')}
-            </h3>
-            <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-3xl font-medium">
-              {t('Computers communicate over Local Networks (Layer 2) using Physical MAC Addresses, but internet applications only know Logical IP Addresses (Layer 3). Even if your PC knows a server\'s IP, it cannot physically build the Ethernet frame without the MAC address! ARP acts as the translator to fix this.', 'کمپیوٹر لوکل نیٹ ورکس پر میک ایڈریسز کا استعمال کرتے ہوئے بات چیت کرتے ہیں، لیکن انٹرنیٹ ایپلیکیشنز صرف آئی پی ایڈریسز کو جانتی ہیں۔ ARP ان دونوں کے درمیان مترجم کا کام کرتا ہے۔')}
-            </p>
-          </div>
-
-          <ARPAnimation />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mt-8 md:mt-12">
-            <div className="p-6 md:p-10 bg-gradient-to-br from-orange-400 to-red-500 text-white rounded-[24px] md:rounded-[32px] shadow-xl hover:-translate-y-2 transition-transform">
-              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                <Share2 size={24} className="md:w-8 md:h-8" />
-                <p className="text-xl md:text-2xl font-black">{t('ARP Request', 'ARP Request')}</p>
-              </div>
-              <p className="text-2xl md:text-4xl font-black mb-2 md:mb-4">BROADCAST</p>
-              <p className="text-[10px] md:text-sm md:text-base opacity-90 leading-relaxed font-bold">
-                {t('Sent to ALL devices on the local switch. It blindly shouts: "Hey everyone! Whoever owns IP 192.168.1.5, please reply to me and tell me your Hardware MAC Address!"', 'یہ نیٹ ورک پر موجود تمام آلات کو بھیجا جاتا ہے۔ یہ پوچھتا ہے کہ مطلوبہ آئی پی کا میک ایڈریس کیا ہے۔')}
+              <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-3xl font-medium">
+                {t('Computers communicate over Local Networks (Layer 2) using Physical MAC Addresses, but internet applications only know Logical IP Addresses (Layer 3). ARP acts as the bridge.', 'لوکل نیٹ ورکس پر کمپیوٹر فزیکل ایڈریس استعمال کرتے ہیں جبکہ ایپلیکیشنز لاجیکل ایڈریس۔ اے آر پی ان کے درمیان پل ہے۔')}
               </p>
             </div>
-            <div className="p-6 md:p-10 bg-gradient-to-br from-[#006400] to-[#00A651] text-white rounded-[24px] md:rounded-[32px] shadow-xl hover:-translate-y-2 transition-transform">
-              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                <ArrowRight size={24} className="md:w-8 md:h-8" />
-                <p className="text-xl md:text-2xl font-black">{t('ARP Reply', 'ARP Reply')}</p>
+
+            <ARPAnimation />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="p-8 bg-blue-50 border border-blue-100 rounded-[40px] space-y-4">
+                <h4 className="text-xl font-black text-blue-900 uppercase italic underline underline-offset-4 decoration-blue-200">ARP (Standard)</h4>
+                <p className="text-xs text-blue-800 font-medium leading-relaxed">
+                  {t("Maps an IP address to a MAC address. Used when you know the destination IP but need to build the Ethernet frame.", "آئی پی ایڈریس کو میک ایڈریس میں نقشہ بناتا ہے۔")}
+                </p>
               </div>
-              <p className="text-2xl md:text-4xl font-black mb-2 md:mb-4">UNICAST</p>
-              <p className="text-[10px] md:text-sm md:text-base opacity-90 leading-relaxed font-bold">
-                {t('Sent DIRECTLY and privately back to the original requester. The target device answers: "That\'s my IP! Here is my exact MAC Address. Save it in your ARP Cache!"', 'یہ خاص طور پر اصل درخواست کنندہ کو واپس بھیجا جاتا ہے۔ ہدف والا آلہ اپنا درست میک ایڈریس فراہم کرتا ہے۔')}
-              </p>
+              <div className="p-8 bg-orange-50 border border-orange-100 rounded-[40px] space-y-4">
+                <h4 className="text-xl font-black text-orange-900 uppercase italic underline underline-offset-4 decoration-orange-200">RARP (Reverse)</h4>
+                <p className="text-xs text-orange-800 font-medium leading-relaxed">
+                  {t("Maps a physical MAC address to an IP address. Primarily used by diskless workstations to find their IP on startup.", "میک ایڈریس کو آئی پی ایڈریس میں نقشہ بناتا ہے۔")}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </WeekCard>
 
-        <DNSSection />
+        {/* Week 12: Mobile IP & Dynamic Routing */}
+        <WeekCard
+          week={12}
+          title="Mobile IP & 802.11"
+          titleUr="موبائل آئی پی اور وائی فائی"
+          isExpanded={expandedWeek === 12}
+          onToggle={() => setExpandedWeek(expandedWeek === 12 ? 0 : 12)}
+        >
+          <div className="space-y-12">
+            <div className="p-10 md:p-16 bg-gray-900 rounded-[60px] text-white relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity"><Radio size={160} /></div>
+              <div className="relative z-10 max-w-2xl space-y-8">
+                <h4 className="text-4xl font-black italic tracking-tighter text-blue-400">{t("The Challenges of Mobility", "موبائلٹی کے چیلنجز")}</h4>
+                <p className="text-sm text-gray-400 leading-relaxed font-medium">
+                  {t("When a device moves from one network to another, its IP address must change, but active connections (TCP) would drop. Mobile IP solves this using 'Home Agents' and 'Foreign Agents' to tunnel traffic to the mobile node.", "جب کوئی آلہ ایک نیٹ ورک سے دوسرے نیٹ ورک میں جاتا ہے، تو اس کا آئی پی بدلنا چاہیے۔ موبائل آئی پی اسے ہوم اور فارن ایجنٹس کے ذریعے حل کرتا ہے۔")}
+                </p>
+                <div className="flex gap-4">
+                  <div className="px-6 py-3 bg-white/5 rounded-2xl border border-white/10 font-black text-[10px] uppercase tracking-widest text-blue-200">Indirect Routing</div>
+                  <div className="px-6 py-3 bg-white/5 rounded-2xl border border-white/10 font-black text-[10px] uppercase tracking-widest text-emerald-200">Direct Routing</div>
+                </div>
+              </div>
+            </div>
 
-        {/* NEW ENHANCED CONTENT - CHAPTER 3 & 4 */}
-        <NetworkDevicesSection />
-        <TCPvsUDPSection />
-        <WirelessSection />
-        <SecuritySection />
-        <CloudSection />
+            <LectureNote
+              title="802.11 Framework"
+              content="WiFi uses the 802.11 standard. Unlike Ethernet which uses Collision Detection, WiFi uses Collision Avoidance (CSMA/CA) because radio signals are difficult to detect during transmission."
+              icon={Wifi}
+            />
+          </div>
+        </WeekCard>
+
+        {/* Week 13: ACL & Multimedia */}
+        <WeekCard
+          week={13}
+          title="ACLs & Multimedia"
+          titleUr="اے سی ایل اور ملٹی میڈیا"
+          isExpanded={expandedWeek === 13}
+          onToggle={() => setExpandedWeek(expandedWeek === 13 ? 0 : 13)}
+        >
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white p-8 rounded-[48px] border-2 border-red-100 shadow-xl space-y-6">
+                <div className="flex justify-between items-start">
+                  <div className="p-3 bg-red-50 text-red-600 rounded-2xl"><Shield size={32} /></div>
+                  <span className="px-3 py-1 bg-red-100 text-red-700 text-[10px] font-black rounded-lg uppercase tracking-widest">{t("Traffic Filtering", "ٹریفک فلٹر")}</span>
+                </div>
+                <h4 className="text-2xl font-black text-gray-900 leading-tight">{t("Access Control Lists", "ایکسیس کنٹرول لسٹ")}</h4>
+                <p className="text-sm text-gray-500 font-medium leading-relaxed">
+                  {t("A set of rules for filtering network traffic. They can permit or deny packets based on Source IP, Destination IP, or Port Numbers.", "ٹریفک کو فلٹر کرنے کے قواعد کا ایک مجموعہ۔ یہ آئی پی یا پورٹ کی بنیاد پر پیکٹ کی اجازت دے سکتے ہیں۔")}
+                </p>
+                <div className="p-4 bg-gray-900 rounded-2xl font-mono text-[10px] text-emerald-400">
+                  <div className="opacity-40"># Cisco Standard ACL</div>
+                  <div>access-list 10 permit 192.168.1.0 0.0.0.255</div>
+                  <div>access-list 10 deny any</div>
+                </div>
+              </div>
+
+              <div className="bg-emerald-600 p-8 md:p-12 rounded-[48px] text-white flex flex-col justify-between shadow-2xl">
+                <div className="space-y-4">
+                  <PlayCircle size={40} className="text-emerald-200" />
+                  <h4 className="text-2xl font-black italic">{t("Multimedia Networking", "ملٹی میڈیا نیٹ ورکنگ")}</h4>
+                  <p className="text-[11px] text-emerald-100/70 font-medium leading-relaxed">
+                    {t("Real-time streaming requires Quality of Service (QoS). It deals with Jitter, Packet Delay, and Bandwidth reservations to ensure smooth video/audio.", "ریئل ٹائم اسٹریمنگ کے لیے QoS کی ضرورت ہوتی ہے۔")}
+                  </p>
+                </div>
+                <div className="bg-white/10 p-4 rounded-2xl mt-8">
+                  <span className="text-[10px] font-black uppercase text-emerald-200">{t("VoIP (Voice over IP)", "وی او آئی پی")}</span>
+                  <div className="mt-2 h-1 w-full bg-white/20 rounded-full overflow-hidden">
+                    <div className="h-full w-2/3 bg-emerald-400" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </WeekCard>
+
+        {/* Week 14: Security & Crypto */}
+        <WeekCard
+          week={14}
+          title="Network Security & NAT"
+          titleUr="نیٹ ورک سیکیورٹی اور نی اے ٹی"
+          isExpanded={expandedWeek === 14}
+          onToggle={() => setExpandedWeek(expandedWeek === 14 ? 0 : 14)}
+        >
+          <div className="space-y-12">
+            <SecuritySection />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-gray-900 p-8 rounded-[48px] text-white space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-blue-600 rounded-2xl"><Lock size={24} /></div>
+                  <h4 className="text-2xl font-black italic">{t("Cryptography", "کرپٹوگرافی")}</h4>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <span className="text-xs font-black text-gray-400">{t("Symmetric", "سائیمیٹرک")}</span>
+                    <span className="text-[10px] font-bold text-blue-400">AES, DES</span>
+                  </div>
+                  <div className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <span className="text-xs font-black text-gray-400">{t("Asymmetric", "ایسائیمیٹرک")}</span>
+                    <span className="text-[10px] font-bold text-emerald-400">RSA, Diffie-Hellman</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-orange-50 p-8 rounded-[48px] border border-orange-100 flex flex-col justify-center gap-6">
+                <h4 className="text-xl font-black text-orange-900 uppercase tracking-tight italic underline decoration-orange-200 underline-offset-8">Network Address Translation (NAT)</h4>
+                <p className="text-xs text-orange-800/70 font-medium leading-relaxed">
+                  {t("Translates private IP addresses to a single public IP address. This conserves the IPv4 address space and adds a layer of security by hiding internal network structure.", "پرائیویٹ آئی پی ایڈریسز کو ایک پبلک آئی پی ایڈریس میں ترجمہ کرتا ہے۔")}
+                </p>
+                <div className="flex items-center gap-4 opacity-50 grayscale">
+                  <Laptop size={32} className="text-orange-900" />
+                  <ArrowRight size={24} />
+                  <Server size={32} className="text-orange-900" />
+                  <ArrowRight size={24} />
+                  <Globe2 size={32} className="text-orange-900" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </WeekCard>
+
+        {/* Week 15: Final Evolution */}
+        <WeekCard
+          week={15}
+          title="Final Implementation"
+          titleUr="آخری نفاذ"
+          isExpanded={expandedWeek === 15}
+          onToggle={() => setExpandedWeek(expandedWeek === 15 ? 0 : 15)}
+        >
+          <div className="p-10 md:p-20 bg-linear-to-br from-[#006400] via-[#00A651] to-[#006400] rounded-[60px] text-white text-center relative overflow-hidden">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-20 -right-20 p-20 opacity-5"
+            >
+              <RefreshCw size={300} />
+            </motion.div>
+            <div className="relative z-10 space-y-8">
+              <Rocket size={80} className="mx-auto text-emerald-200 mb-8" />
+              <h4 className="text-4xl md:text-7xl font-black italic tracking-tighter leading-none">{t("The Capstone Project", "کیپ اسٹون پروجیکٹ")}</h4>
+              <p className="text-lg md:text-2xl text-emerald-100/80 font-medium leading-relaxed max-w-2xl mx-auto">
+                {t("Apply everything from application protocols to low-level link layer framing. Build a simulated or real network environment with full routing and security.", "ایپلیکیشن پروٹوکول سے لنک لیئر فریمنگ تک ہر چیز کا اطلاق کریں۔")}
+              </p>
+              <div className="pt-12 flex flex-wrap justify-center gap-4">
+                <button className="px-10 py-5 bg-white text-[#006400] rounded-3xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-2xl">
+                  {t("Submit Final Project", "پروجیکٹ جمع کرائیں")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </WeekCard>
       </section>
 
+      {/* Completion Card */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 mb-32">
+        <div className="bg-white rounded-[60px] p-12 md:p-24 shadow-2xl border border-gray-100 text-center relative overflow-hidden group">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-linear-to-b from-[#006400] to-transparent opacity-20" />
+          <div className="relative z-10 space-y-8">
+            <div className="inline-flex p-4 bg-emerald-50 rounded-full text-[#006400] mb-4 animate-bounce">
+              <Award size={48} />
+            </div>
+            <h2 className="text-4xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none italic">
+              {t("Course Fully Mastered!", "کورس مکمل مہارت حاصل کی!")}
+            </h2>
+            <p className="text-lg md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed">
+              {t("You have traveled across all 7 layers of the OSI model. From physical bits to global applications, you are now a Network Architect.", "آپ نے او ایس آئی ماڈل کی تمام 7 تہوں کا سفر کیا ہے۔")}
+            </p>
+            <div className="pt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { l: "Architectural Insight", v: "100%", i: <Layers /> },
+                { l: "Security Proficiency", v: "100%", i: <Shield /> },
+                { l: "Global Protocols", v: "100%", i: <Globe /> },
+              ].map((stat, i) => (
+                <div key={i} className="p-8 bg-gray-50 rounded-[40px] border border-gray-100 space-y-4">
+                  <div className="text-[#006400] w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-50 flex items-center justify-center mx-auto mb-4">{stat.i}</div>
+                  <h6 className="font-black text-[10px] text-gray-400 uppercase tracking-widest">{t(stat.l, stat.l)}</h6>
+                  <div className="text-3xl font-black text-gray-900 italic">{stat.v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

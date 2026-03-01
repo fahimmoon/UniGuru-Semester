@@ -30,8 +30,8 @@ export const Dashboard: React.FC<{ onCourseSelect: (id: string) => void }> = ({ 
         <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-pak-green transition-colors">
           <Search size={20} />
         </div>
-        <input 
-          type="text" 
+        <input
+          type="text"
           placeholder={t('Search topics, chapters...', 'موضوعات، ابواب تلاش کریں...')}
           className="w-full pl-14 pr-6 py-5 bg-white rounded-[28px] shadow-xl shadow-gray-200/40 border border-gray-100 focus:ring-2 focus:ring-pak-green outline-none transition-all text-sm font-medium placeholder:text-gray-300"
         />
@@ -59,7 +59,7 @@ export const Dashboard: React.FC<{ onCourseSelect: (id: string) => void }> = ({ 
       </div>
 
       {/* Quote of the Day */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="bg-white border border-pak-light-green/20 rounded-[32px] p-8 relative overflow-hidden shadow-2xl shadow-pak-green/5"
@@ -68,9 +68,9 @@ export const Dashboard: React.FC<{ onCourseSelect: (id: string) => void }> = ({ 
           <Star size={64} className="text-pak-green" />
         </div>
         <div className="absolute top-4 right-4">
-          <VoiceNarration 
-            text="Knowledge is the life of the mind. Hazrat Ali R.A." 
-            textUr="علم ذہن کی زندگی ہے۔ حضرت علی رضی اللہ عنہ" 
+          <VoiceNarration
+            text="Knowledge is the life of the mind. Hazrat Ali R.A."
+            textUr="علم ذہن کی زندگی ہے۔ حضرت علی رضی اللہ عنہ"
           />
         </div>
         <div className="relative z-10 space-y-4">
@@ -109,11 +109,11 @@ export const Dashboard: React.FC<{ onCourseSelect: (id: string) => void }> = ({ 
               className="bg-white p-6 rounded-[32px] shadow-2xl shadow-gray-300/60 border-2 border-gray-50 flex items-center gap-6 text-left group relative overflow-hidden"
             >
               <div className={`absolute top-0 right-0 w-32 h-32 ${course.color} opacity-[0.08] rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500`} />
-              
+
               <div className={`w-24 h-24 rounded-[28px] ${course.color} flex items-center justify-center text-white shadow-2xl shadow-current/40 group-hover:rotate-6 transition-transform duration-300 relative z-10`}>
                 {getIcon(course.icon)}
               </div>
-              
+
               <div className="flex-1 space-y-1 relative z-10">
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-black text-pak-green bg-pak-green/10 px-3 py-1 rounded-full uppercase tracking-widest">
@@ -128,7 +128,7 @@ export const Dashboard: React.FC<{ onCourseSelect: (id: string) => void }> = ({ 
                   <span className="text-xs font-black text-gray-900 uppercase">32%</span>
                 </div>
               </div>
-              
+
               <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-400 group-hover:bg-pak-green group-hover:text-white transition-all shadow-xl border border-gray-100">
                 <ChevronRight size={24} />
               </div>

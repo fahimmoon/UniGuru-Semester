@@ -12,9 +12,11 @@ import { RouterSimulation } from './components/RouterSimulation';
 import { IPVisualizer } from './components/IPVisualizer';
 import { Profile } from './components/Profile';
 import { CNDCContent } from './components/CNDCContent';
+import { AIContent } from './components/AIContent';
+import { TechnicalWritingContent } from './components/TechnicalWritingContent';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Search, Bookmark, Download, Share2, Award, Star, ArrowLeft, Calculator, Laptop } from 'lucide-react';
+import { BookOpen, Search, Bookmark, Download, Share2, Award, Star, ArrowLeft, Calculator, Laptop, Brain, Edit3, FileText, Send } from 'lucide-react';
 
 const AppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -29,6 +31,7 @@ const AppContent: React.FC = () => {
             <button
               onClick={() => setSelectedCourse(null)}
               className="p-2 bg-white rounded-full shadow-sm text-pak-green"
+              aria-label={t('Go Back', 'واپس جائیں')}
             >
               <ArrowLeft size={20} />
             </button>
@@ -54,11 +57,72 @@ const AppContent: React.FC = () => {
         </div>
       );
     }
+
+    if (courseId === 'ai') {
+      return (
+        <div className="space-y-6 pb-8">
+          <div className="p-4 flex items-center gap-4 sticky top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 z-40 shadow-sm">
+            <button
+              onClick={() => setSelectedCourse(null)}
+              className="p-2 bg-white rounded-full shadow-sm text-purple-600"
+              aria-label={t('Go Back', 'واپس جائیں')}
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <h2 className="text-xl font-black text-gray-900">{t('Artificial Intelligence', 'مصنوعی ذہانت')}</h2>
+          </div>
+
+          <div className="bg-linear-to-br from-purple-700 to-indigo-600 text-white p-8 mb-4 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
+            <div className="relative z-10 space-y-2">
+              <div className="bg-white/20 w-12 h-12 flex items-center justify-center rounded-2xl mb-4 backdrop-blur-md border border-white/20">
+                <Brain size={24} />
+              </div>
+              <h2 className="text-3xl font-black">{t('Mastering AI', 'اے آئی میں مہارت')}</h2>
+              <p className="opacity-80 text-sm font-medium">{t('From intelligent agents to deep neural networks.', 'ذہین ایجنٹوں سے لے کر ڈیپ نیورل نیٹ ورکس تک۔')}</p>
+            </div>
+          </div>
+
+          <AIContent />
+        </div>
+      );
+    }
+
+    if (courseId === 'tbw') {
+      return (
+        <div className="space-y-6 pb-8">
+          <div className="p-4 flex items-center gap-4 sticky top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 z-40 shadow-sm">
+            <button
+              onClick={() => setSelectedCourse(null)}
+              className="p-2 bg-white rounded-full shadow-sm text-emerald-600"
+              aria-label={t('Go Back', 'واپس جائیں')}
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <h2 className="text-xl font-black text-gray-900">{t('Technical Writing', 'ٹیکنیکل رائٹنگ')}</h2>
+          </div>
+
+          <div className="bg-linear-to-br from-emerald-700 to-teal-600 text-white p-8 mb-4 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
+            <div className="relative z-10 space-y-2">
+              <div className="bg-white/20 w-12 h-12 flex items-center justify-center rounded-2xl mb-4 backdrop-blur-md border border-white/20">
+                <Edit3 size={24} />
+              </div>
+              <h2 className="text-3xl font-black">{t('Professional Writing', 'پیشہ ورانہ تحریر')}</h2>
+              <p className="opacity-80 text-sm font-medium">{t('Mastering reports, memos, and formal communication.', 'رپورٹس، میموز اور رسمی مواصلت میں مہارت حاصل کرنا۔')}</p>
+            </div>
+          </div>
+
+          <TechnicalWritingContent />
+        </div>
+      );
+    }
     return (
       <div className="p-8 text-center space-y-4">
         <button
           onClick={() => setSelectedCourse(null)}
           className="p-2 bg-white rounded-full shadow-sm text-pak-green inline-flex"
+          aria-label={t('Go Back', 'واپس جائیں')}
         >
           <ArrowLeft size={20} />
         </button>
@@ -79,7 +143,7 @@ const AppContent: React.FC = () => {
       case 'learn':
         return (
           <div className="space-y-8 pb-12">
-            <div className="bg-gradient-to-br from-[#006400] to-[#00A651] text-white p-8 rounded-b-[40px] shadow-2xl relative overflow-hidden">
+            <div className="bg-linear-to-br from-pak-green to-pak-light-green text-white p-8 rounded-b-[40px] shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
               <div className="bg-white/20 w-14 h-14 flex items-center justify-center rounded-2xl mb-6 backdrop-blur-md shadow-inner border border-white/20">
                 <Laptop size={28} />
@@ -96,7 +160,7 @@ const AppContent: React.FC = () => {
       case 'tools':
         return (
           <div className="space-y-8 pb-12">
-            <div className="bg-gradient-to-br from-indigo-700 to-blue-500 text-white p-8 rounded-b-[40px] shadow-2xl relative overflow-hidden">
+            <div className="bg-linear-to-br from-indigo-700 to-blue-500 text-white p-8 rounded-b-[40px] shadow-2xl relative overflow-hidden">
               <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -mb-10 -mr-10" />
               <div className="bg-white/20 w-14 h-14 flex items-center justify-center rounded-2xl mb-6 backdrop-blur-md shadow-inner border border-white/20">
                 <Calculator size={28} />
@@ -150,8 +214,8 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[100dvh] w-full bg-[#f0f2f5] overflow-hidden sm:p-4 md:p-8">
-      <div className="flex flex-col bg-gray-50 h-[100dvh] sm:h-full sm:max-h-[850px] w-full max-w-[430px] sm:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] relative overflow-hidden ring-1 ring-gray-900/5 transition-all">
+    <div className="flex justify-center items-center min-h-dvh w-full bg-[#f0f2f5] overflow-hidden sm:p-4 md:p-8">
+      <div className="flex flex-col bg-gray-50 h-dvh sm:h-full sm:max-h-[850px] w-full max-w-[430px] sm:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] relative overflow-hidden ring-1 ring-gray-900/5 transition-all">
         <Header onMenuClick={() => { }} />
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden pak-pattern pb-[88px] relative z-0 hide-scrollbar">
